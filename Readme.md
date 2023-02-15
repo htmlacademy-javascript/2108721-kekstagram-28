@@ -1,7 +1,8 @@
 # Личный проект «Кекстаграм»
 
 * Студент: [Roman Tsarew](https://up.htmlacademy.ru/javascript/28/user/2108721).
-* Наставник: `Неизвестно`.
+* Наставник: [Арсений
+Березин](https://htmlacademy.ru/profile/id263537).
 
 ---
 
