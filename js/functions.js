@@ -24,7 +24,7 @@
 {
   const getNumber = (value) => {
     if (typeof value === 'string') {
-      let number = value.replace(/\D/g, '');
+      const number = value.replace(/\D/g, '');
       return parseInt(number, 10);
     }
     if (typeof value === 'number') {
