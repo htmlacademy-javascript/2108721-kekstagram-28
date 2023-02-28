@@ -1,7 +1,7 @@
 # Личный проект «Кекстаграм»
 
 * Студент: [Roman Tsarew](https://up.htmlacademy.ru/javascript/28/user/2108721).
-* Наставник: [Дмитрий Гуляев](https://htmlacademy.ru/profile/dima).
+* Наставник: [Михаил Савотиков](https://htmlacademy.ru/profile/id98316).
 
 ---
 
