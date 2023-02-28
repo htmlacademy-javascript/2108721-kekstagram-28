@@ -30,7 +30,7 @@ const DESCRIPTIONS = [
   'крабс',
   'концерт',
   'сафари',
-]
+];
 
 const MESSAGES = [
   'Всё отлично!',
@@ -39,7 +39,7 @@ const MESSAGES = [
   'Моя бабушка случайно чихнула с фотоаппаратом в руках и у неё получилась фотография лучше.',
   'Я поскользнулся на банановой кожуре и уронил фотоаппарат на кота и у меня получилась фотография лучше.',
   'Лица у людей на фотке перекошены, как будто их избивают. Как можно было поймать такой неудачный момент?!',
-]
+];
 
 const NAMES = [
   'Андрей',
@@ -47,7 +47,7 @@ const NAMES = [
   'Василий',
   'Николай',
   'Сергей'
-]
+];
 
 //  id
 
@@ -59,26 +59,26 @@ const getRandomInteger = (min, max) => {
 };
 
 const createRandomId = (min, max) => {
-  const previousValues = []
+  const previousValues = [];
   return function () {
-    let currentValue = getRandomInteger(min, max)
+    let currentValue = getRandomInteger(min, max);
     if (previousValues.length >= (max - min + 1)) {
       console.error(`Перебраны все числа из диапазона от ${min} до ${max}`);
-      return null
+      return null;
     }
     while (previousValues.includes(currentValue)) {
-      currentValue = getRandomInteger(min, max)
+      currentValue = getRandomInteger(min, max);
     }
-    previousValues.push(currentValue)
-    return currentValue
-  }
-}
-const generateId = createRandomId(1, 25)
-const generateCommentId = createRandomId(0, 300)
-const createIdGenerator = (start) => () => start += 1
-const photoId = createIdGenerator(0)
+    previousValues.push(currentValue);
+    return currentValue;
+  };
+};
+const generateId = createRandomId(1, 25);
+const generateCommentId = createRandomId(0, 300);
+const createIdGenerator = (start) => () => start += 1;
+const photoId = createIdGenerator(0);
 
-const getRandomArrayElement = (elements) => elements[getRandomInteger(0, elements.length - 1)]
+const getRandomArrayElement = (elements) => elements[getRandomInteger(0, elements.length - 1)];
 
 // url
 
@@ -87,10 +87,10 @@ const getRandomComment = () => ({
   avatar: `img/avatar-${getRandomInteger(1, 6)}.svg`,
   message: getRandomArrayElement(MESSAGES),
   name: getRandomArrayElement(NAMES),
-})
+});
 
-const commentsArray = Array.from({ length: 10 }, getRandomComment)
-const randomComment = Math.floor(Math.random() * commentsArray.length)
+const commentsArray = Array.from({ length: 10 }, getRandomComment);
+const randomComment = Math.floor(Math.random() * commentsArray.length);
 
 // функция создания случайного объекта
 const getRandomObject = () => ({
@@ -99,8 +99,8 @@ const getRandomObject = () => ({
   description: getRandomArrayElement(DESCRIPTIONS),
   likes: getRandomInteger(15, 200),
   comments: commentsArray[randomComment],
-})
+});
 // итоговый массив из 25 объектов
-const randomObjectsArray = Array.from({ length: 25 }, getRandomObject)
-console.log(randomObjectsArray)
+const randomObjectsArray = Array.from({ length: 25 }, getRandomObject);
+console.log(randomObjectsArray);
 
