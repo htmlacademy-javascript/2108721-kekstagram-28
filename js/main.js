@@ -1,9 +1,3 @@
-/* eslint-disable no-return-assign */
-// id, число — идентификатор опубликованной фотографии. Это число от 1 до 25. Идентификаторы не должны повторяться.
-// url, строка — адрес картинки вида photos/{{i}}.jpg, где {{i}} — это число от 1 до 25. Адреса картинок не должны повторяться.
-// description, строка — описание фотографии. Описание придумайте самостоятельно.
-// likes, число — количество лайков, поставленных фотографии. Случайное число от 15 до 200.
-// comments, массив объектов — список комментариев, оставленных другими пользователями к этой фотографии. Количество комментариев к каждой фотографии вы определяете на своё усмотрение. Все комментарии генерируются случайным образом. Пример описания объекта с комментарием:
 const DESCRIPTIONS = [
   'пляж',
   'указатель к пляжу',
@@ -48,6 +42,17 @@ const NAMES = [
   'Николай',
   'Сергей'
 ];
+const COMMENTS_RANGE_MIN = 0;
+const COMMENTS_RANGE_MAX = 300;
+const PHOTOS_COUNT = 0;
+const MIN_ID = 1;
+const MAX_ID = 25;
+const MIN_LIKES = 15;
+const MAX_LIKES = 200;
+const MIN_AVATAR_ID = 1;
+const MAX_AVATAR_ID = 6;
+const COMMENTS_COUNT = 10;
+const ARRAY_COUNT = 25;
 
 //  id
 
@@ -63,9 +68,7 @@ const createRandomId = (min, max) => {
   return function () {
     let currentValue = getRandomInteger(min, max);
     if (previousValues.length >= (max - min + 1)) {
-      // eslint-disable-next-line no-console
-      console.error('Больше не осталось чисел');
-      return null;
+      throw new Error('Больше не осталось чисел');
     }
     while (previousValues.includes(currentValue)) {
       currentValue = getRandomInteger(min, max);
@@ -74,10 +77,10 @@ const createRandomId = (min, max) => {
     return currentValue;
   };
 };
-const generateId = createRandomId(1, 25);
-const generateCommentId = createRandomId(0, 300);
-const createIdGenerator = (start) => () => start += 1;
-const photoId = createIdGenerator(0);
+const generateId = createRandomId(MIN_ID, MAX_ID);
+const generateCommentId = createRandomId(COMMENTS_RANGE_MIN, COMMENTS_RANGE_MAX);
+const createIdGenerator = (start) => start === start + 1;
+const photoId = createIdGenerator(PHOTOS_COUNT);
 
 const getRandomArrayElement = (elements) => elements[getRandomInteger(0, elements.length - 1)];
 
@@ -85,22 +88,21 @@ const getRandomArrayElement = (elements) => elements[getRandomInteger(0, element
 
 const getRandomComment = () => ({
   id: generateCommentId(),
-  avatar: `img/avatar-${getRandomInteger(1, 6)}.svg`,
+  avatar: `img/avatar-${getRandomInteger(MIN_AVATAR_ID, MAX_AVATAR_ID)}.svg`,
   message: getRandomArrayElement(MESSAGES),
   name: getRandomArrayElement(NAMES),
 });
 
-const commentsArray = Array.from({ length: 10 }, getRandomComment);
+const commentsArray = Array.from({ length: COMMENTS_COUNT }, getRandomComment);
 const randomComment = Math.floor(Math.random() * commentsArray.length);
 
 // функция создания случайного объекта
-const getRandomObject = () => ({
+const getRandomPhotoObject = () => ({
   id: generateId(),
   url: `photos/${photoId()}.jpg`,
   description: getRandomArrayElement(DESCRIPTIONS),
-  likes: getRandomInteger(15, 200),
+  likes: getRandomInteger(MIN_LIKES, MAX_LIKES),
   comments: commentsArray[randomComment],
 });
 // итоговый массив из 25 объектов
-Array.from({ length: 25 }, getRandomObject);
-
+Array.from({ length: ARRAY_COUNT }, getRandomPhotoObject);
