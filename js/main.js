@@ -63,7 +63,8 @@ const createRandomId = (min, max) => {
   return function () {
     let currentValue = getRandomInteger(min, max);
     if (previousValues.length >= (max - min + 1)) {
-      console.error(`Перебраны все числа из диапазона от ${min} до ${max}`);
+      // eslint-disable-next-line no-console
+      console.error('Больше не осталось чисел');
       return null;
     }
     while (previousValues.includes(currentValue)) {
@@ -101,6 +102,5 @@ const getRandomObject = () => ({
   comments: commentsArray[randomComment],
 });
 // итоговый массив из 25 объектов
-const randomObjectsArray = Array.from({ length: 25 }, getRandomObject);
-console.log(randomObjectsArray);
+Array.from({ length: 25 }, getRandomObject);
 
