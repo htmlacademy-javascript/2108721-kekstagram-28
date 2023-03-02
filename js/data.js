@@ -1,7 +1,7 @@
-import { getRandomInteger } from './util.js';
-import { createRandomId } from './util.js';
-import { getRandomArrayElement } from './util.js';
-import { createIdGenerator } from './util.js';
+import { getRandomInteger } from './utils.js';
+import { createRandomId } from './utils.js';
+import { getRandomArrayElement } from './utils.js';
+import { createIdGenerator } from './utils.js';
 
 const DESCRIPTIONS = [
   'пляж',
@@ -84,7 +84,6 @@ const getRandomPhotoObject = () => ({
   comments: commentsArray[randomComment],
 });
 // итоговая функция по получению массива из 25 объектов
-const createObjects = () => Array.from({ length: ARRAY_COUNT }, getRandomPhotoObject);
+export const createObjects = () => Array.from({ length: ARRAY_COUNT }, getRandomPhotoObject);
 
-export {createObjects};
 
