@@ -1,7 +1,4 @@
-import { getRandomInteger } from './utils.js';
-import { createRandomId } from './utils.js';
-import { getRandomArrayElement } from './utils.js';
-import { createIdGenerator } from './utils.js';
+import { getRandomInteger, createRandomId, getRandomArrayElement,createIdGenerator } from './utils.js';
 
 const DESCRIPTIONS = [
   'пляж',
