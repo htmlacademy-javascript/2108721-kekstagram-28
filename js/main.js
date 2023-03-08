@@ -1,3 +1,5 @@
-import './data.js';
 import {createObjects} from './data.js';
-createObjects();
+import {createPictures} from './pictures.js';
+
+const similarPictures = createObjects();
+createPictures(similarPictures);

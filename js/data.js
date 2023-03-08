@@ -1,7 +1,4 @@
-import { getRandomInteger } from './utils.js';
-import { createRandomId } from './utils.js';
-import { getRandomArrayElement } from './utils.js';
-import { createIdGenerator } from './utils.js';
+import { getRandomInteger, createRandomId, getRandomArrayElement,createIdGenerator } from './utils.js';
 
 const DESCRIPTIONS = [
   'пляж',
@@ -73,7 +70,6 @@ const getRandomComment = () => ({
 });
 
 const commentsArray = Array.from({ length: COMMENTS_COUNT }, getRandomComment);
-const randomComment = Math.floor(Math.random() * commentsArray.length);
 
 // функция создания случайного объекта
 const getRandomPhotoObject = () => ({
@@ -81,7 +77,7 @@ const getRandomPhotoObject = () => ({
   url: `photos/${photoId()}.jpg`,
   description: getRandomArrayElement(DESCRIPTIONS),
   likes: getRandomInteger(MIN_LIKES, MAX_LIKES),
-  comments: commentsArray[randomComment],
+  comments: commentsArray,
 });
 // итоговая функция по получению массива из 25 объектов
 export const createObjects = () => Array.from({ length: ARRAY_COUNT }, getRandomPhotoObject);
