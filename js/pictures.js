@@ -5,6 +5,7 @@ export const createPictures = (pictures) => {
     .querySelector('.picture');
 
   const similarListFragment = document.createDocumentFragment();
+
   pictures.forEach(({ url, comments, likes }) => {
     const pictureElement = similarPictureTemplate.cloneNode(true);
     pictureElement.querySelector('.picture__img').src = url;

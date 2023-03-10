@@ -1,5 +1,8 @@
-import {createObjects} from './data.js';
-import {createPictures} from './pictures.js';
+import { createObjects } from './data.js';
+import { createPictures } from './pictures.js';
+import { interactWithBigPicture } from './full-picture.js';
 
-const similarPictures = createObjects();
-createPictures(similarPictures);
+const userPictures = createObjects();
+createPictures(userPictures);
+
+interactWithBigPicture();

@@ -27,3 +27,4 @@ export const getRandomArrayElement = (elements) => elements[getRandomInteger(0, 
 // eslint-disable-next-line no-return-assign
 export const createIdGenerator = (start) => () => start += 1;
 
+export const isEscapeKey = (evt) => evt.key === 'Escape';
