@@ -24,24 +24,25 @@ export const interactWithBigPicture = () => {
 
   // open modal window and load data
   function openBigPicture(evt) {
-    if (evt.target.matches('.picture__img')) {
+    if (evt.target.closest('.picture')) {
       bigPicture.classList.remove('hidden');
+
+      // URL
+      bigPictureImage.src = evt.target.closest('.picture').querySelector('img').src;
+      // Likes
+      bigPictureLikes.textContent = evt.target.parentElement.querySelector('.picture__likes').textContent;
+      // Comments
+      bigPictureComments.textContent = evt.target.parentElement.querySelector('.picture__comments').textContent;
+      // Description
+      bigPictureDescription.textContent = getRandomArrayElement(DESCRIPTIONS);
+      // Hide 2 comments classes
+      bigPictureCommentsCount.classList.add('hidden');
+      bigPictureCommentsLoader.classList.add('hidden');
+      // Hide scroll on body
+      body.classList.add('modal-open');
+      // comments
+      renderComments(commentsArray);
     }
-    // URL
-    bigPictureImage.src = evt.target.src;
-    // Likes
-    bigPictureLikes.textContent = evt.target.parentElement.querySelector('.picture__likes').textContent;
-    // Comments
-    bigPictureComments.textContent = evt.target.parentElement.querySelector('.picture__comments').textContent;
-    // Description
-    bigPictureDescription.textContent = getRandomArrayElement(DESCRIPTIONS);
-    // Hide 2 comments classes
-    bigPictureCommentsCount.classList.add('hidden');
-    bigPictureCommentsLoader.classList.add('hidden');
-    // Hide scroll on body
-    body.classList.add('modal-open');
-    // comments
-    renderComments(commentsArray);
 
     document.addEventListener('keydown', onBigPictureEscKeydown);
   }
