@@ -11,7 +11,6 @@ export const createPictures = (pictures) => {
     pictureElement.querySelector('.picture__img').src = url;
     pictureElement.querySelector('.picture__comments').textContent = comments.length;
     pictureElement.querySelector('.picture__likes').textContent = likes;
-    similarListElement.appendChild(pictureElement);
     similarListFragment.appendChild(pictureElement);
   });
   similarListElement.appendChild(similarListFragment);
