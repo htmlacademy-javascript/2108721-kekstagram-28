@@ -38,7 +38,6 @@ export const interactWithBigPicture = () => {
     // comments
     renderComments(commentsArray);
 
-
     document.addEventListener('keydown', onBigPictureEscKeydown);
   }
   pictureContainer.addEventListener('click', openBigPicture);
