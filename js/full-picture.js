@@ -1,14 +1,14 @@
 import { isEscapeKey } from './utils.js';
 import { DESCRIPTIONS } from './data.js';
 import { getRandomArrayElement } from './utils.js';
-import { createComments } from './comments.js';
+import { renderComments } from './comments.js';
 import { commentsArray } from './data.js';
 
 export const interactWithBigPicture = () => {
-  const pictureElement = document.querySelector('.pictures');
-  const bigPictureShow = document.querySelector('.big-picture');
+  const picturesContainer = document.querySelector('.pictures');
+  const bigPicture = document.querySelector('.big-picture');
   const bigPictureClose = document.querySelector('.big-picture__cancel');
-  const bigPictureUrl = bigPictureShow.querySelector('.big-picture__img').children;
+  const bigPictureImage = bigPicture.querySelector('.big-picture__img img');
   const bigPictureLikes = document.querySelector('.likes-count');
   const bigPictureComments = document.querySelector('.comments-count');
   const bigPictureDescription = document.querySelector('.social__caption');
@@ -24,9 +24,11 @@ export const interactWithBigPicture = () => {
 
   // open modal window and load data
   function openBigPicture(evt) {
-    bigPictureShow.classList.remove('hidden');
+    if (evt.target.matches('.picture__img')) {
+      bigPicture.classList.remove('hidden');
+    }
     // URL
-    bigPictureUrl[0].src = evt.target.src;
+    bigPictureImage.src = evt.target.src;
     // Likes
     bigPictureLikes.textContent = evt.target.parentElement.querySelector('.picture__likes').textContent;
     // Comments
@@ -39,15 +41,15 @@ export const interactWithBigPicture = () => {
     // Hide scroll on body
     body.classList.add('modal-open');
     // comments
-    createComments(commentsArray);
+    renderComments(commentsArray);
 
     document.addEventListener('keydown', onBigPictureEscKeydown);
   }
-  pictureElement.addEventListener('click', openBigPicture);
+  picturesContainer.addEventListener('click', openBigPicture);
 
   // close modal window
   function closeBigPicture() {
-    bigPictureShow.classList.add('hidden');
+    bigPicture.classList.add('hidden');
     body.classList.remove('modal-open');
 
     document.removeEventListener('keydown', onBigPictureEscKeydown);
