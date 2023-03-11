@@ -1,6 +1,6 @@
 import { getRandomInteger, createRandomId, getRandomArrayElement,createIdGenerator } from './utils.js';
 
-const DESCRIPTIONS = [
+export const DESCRIPTIONS = [
   'пляж',
   'указатель к пляжу',
   'море',
@@ -69,7 +69,7 @@ const getRandomComment = () => ({
   name: getRandomArrayElement(NAMES),
 });
 
-const commentsArray = Array.from({ length: COMMENTS_COUNT }, getRandomComment);
+export const commentsArray = Array.from({ length: COMMENTS_COUNT }, getRandomComment);
 
 // функция создания случайного объекта
 const getRandomPhotoObject = () => ({
