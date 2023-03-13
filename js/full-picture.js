@@ -13,6 +13,11 @@ export const interactWithBigPicture = () => {
   const bigPictureComments = document.querySelector('.comments-count');
   const bigPictureDescription = document.querySelector('.social__caption');
   const body = document.querySelector('body');
+  const commentList = document.querySelector('.social__comments');
+  const loadMoreButton = document.querySelector('.comments-loader');
+  const COMMENTS_PER_STEP = 5;
+  let startIndex = 0;
+  let finishIndex = COMMENTS_PER_STEP;
 
   const onBigPictureEscKeydown = (evt) => {
     if (isEscapeKey(evt)) {
@@ -24,7 +29,6 @@ export const interactWithBigPicture = () => {
   function openBigPicture(evt) {
     if (evt.target.closest('.picture')) {
       bigPicture.classList.remove('hidden');
-
       // URL
       bigPictureImage.src = evt.target.closest('.picture').querySelector('img').src;
       // Likes
@@ -36,7 +40,18 @@ export const interactWithBigPicture = () => {
       // Hide scroll on body
       body.classList.add('modal-open');
       // comments
-      renderComments(userData);
+      renderComments(userData, startIndex, finishIndex);
+      // прописать функцию нажатия кнопки и рендера.
+      loadMoreButton.addEventListener('click', () => {
+        startIndex += COMMENTS_PER_STEP;
+        finishIndex += COMMENTS_PER_STEP;
+        if (finishIndex <= userData[0].comments.length) {
+          renderComments(userData, startIndex, finishIndex);
+        } else {
+          finishIndex = userData[0].comments.length;
+          renderComments(userData, startIndex, finishIndex);
+        }
+      });
     }
 
     document.addEventListener('keydown', onBigPictureEscKeydown);
@@ -47,6 +62,7 @@ export const interactWithBigPicture = () => {
   function closeBigPicture() {
     bigPicture.classList.add('hidden');
     body.classList.remove('modal-open');
+    commentList.innerHTML = '';
 
 
     document.removeEventListener('keydown', onBigPictureEscKeydown);

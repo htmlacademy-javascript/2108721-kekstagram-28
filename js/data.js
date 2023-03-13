@@ -53,7 +53,7 @@ const MIN_LIKES = 15;
 const MAX_LIKES = 200;
 const MIN_AVATAR_ID = 1;
 const MAX_AVATAR_ID = 6;
-const COMMENTS_COUNT = 10;
+const COMMENTS_COUNT = 11;
 const ARRAY_COUNT = 25;
 
 //  id
