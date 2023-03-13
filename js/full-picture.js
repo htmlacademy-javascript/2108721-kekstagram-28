@@ -2,7 +2,7 @@ import { isEscapeKey } from './utils.js';
 import { DESCRIPTIONS } from './data.js';
 import { getRandomArrayElement } from './utils.js';
 import { renderComments } from './comments.js';
-import { commentsArray } from './data.js';
+import { userData } from './main.js';
 
 export const interactWithBigPicture = () => {
   const pictureContainer = document.querySelector('.pictures');
@@ -36,7 +36,7 @@ export const interactWithBigPicture = () => {
       // Hide scroll on body
       body.classList.add('modal-open');
       // comments
-      renderComments(commentsArray);
+      renderComments(userData);
     }
 
     document.addEventListener('keydown', onBigPictureEscKeydown);
