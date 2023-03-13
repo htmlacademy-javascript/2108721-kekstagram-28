@@ -81,5 +81,3 @@ const getRandomPhotoObject = () => ({
 });
 // итоговая функция по получению массива из 25 объектов
 export const createObjects = () => Array.from({ length: ARRAY_COUNT }, getRandomPhotoObject);
-
-
