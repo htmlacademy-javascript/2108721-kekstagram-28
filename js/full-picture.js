@@ -12,9 +12,9 @@ export const interactWithBigPicture = () => {
   const bigPictureLikes = document.querySelector('.likes-count');
   const bigPictureComments = document.querySelector('.comments-count');
   const bigPictureDescription = document.querySelector('.social__caption');
-  const body = document.querySelector('body');
-  let commentsCounterText = document.querySelector('.social__comment-count').textContent;
-  let commentsCounterNumber = parseInt(commentsCounterText.match(/\d+/), 10);
+  const pageBody = document.querySelector('body');
+  const pictureCommentList = document.querySelector('.social__comments');
+  const commentsCounter = document.querySelector('.social__comment-count').childNodes;
   const loadMoreButton = document.querySelector('.comments-loader');
   const COMMENTS_PER_STEP = 5;
   let startIndex = 0;
@@ -38,26 +38,34 @@ export const interactWithBigPicture = () => {
       // Description
       bigPictureDescription.textContent = getRandomArrayElement(DESCRIPTIONS);
       // Hide scroll on body
-      body.classList.add('modal-open');
+      pageBody.classList.add('modal-open');
       // comments
-      renderComments(pictureData, startIndex, finishIndex);
-      // прописать функцию нажатия кнопки и рендера.
+      if (finishIndex >= pictureData[0].comments.length) {
+        finishIndex = pictureData[0].comments.length;
+        renderComments(pictureData, startIndex, finishIndex);
+        commentsCounter[0].textContent = `${finishIndex} из `;
+        loadMoreButton.classList.add('hidden');
+        // delete html comments
+        if (finishIndex === 0) {
+          while (pictureCommentList.firstChild) {
+            pictureCommentList.removeChild(pictureCommentList.firstChild);
+          }
+        }
+      } else {
+        renderComments(pictureData, startIndex, finishIndex);
+      }
+      // Comments button click function
       loadMoreButton.addEventListener('click', () => {
         startIndex += COMMENTS_PER_STEP;
         finishIndex += COMMENTS_PER_STEP;
         if (finishIndex <= pictureData[0].comments.length) {
           renderComments(pictureData, startIndex, finishIndex);
-          commentsCounterNumber = finishIndex;
-          commentsCounterText = `${commentsCounterNumber} из ${ bigPictureComments.textContent } комментариев`;
-          console.log(commentsCounterText)
         } else {
           finishIndex = pictureData[0].comments.length;
           renderComments(pictureData, startIndex, finishIndex);
           loadMoreButton.classList.add('hidden');
-          commentsCounterNumber = finishIndex;
-          commentsCounterText = `${commentsCounterNumber} из ${ bigPictureComments.textContent } комментариев`;
-          console.log(commentsCounterText)
         }
+        commentsCounter[0].textContent = `${finishIndex} из`;
       });
     }
     document.addEventListener('keydown', onBigPictureEscKeydown);
@@ -67,7 +75,7 @@ export const interactWithBigPicture = () => {
   // close modal window
   function closeBigPicture() {
     bigPicture.classList.add('hidden');
-    body.classList.remove('modal-open');
+    pageBody.classList.remove('modal-open');
     startIndex = 0;
     finishIndex = COMMENTS_PER_STEP;
     loadMoreButton.classList.remove('hidden');
