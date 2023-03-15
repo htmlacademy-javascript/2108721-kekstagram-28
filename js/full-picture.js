@@ -25,6 +25,20 @@ export const interactWithBigPicture = () => {
       closeBigPicture();
     }
   };
+
+  function loadMoreComments () {
+    startIndex += COMMENTS_PER_STEP;
+    finishIndex += COMMENTS_PER_STEP;
+    if (finishIndex <= pictureData[0].comments.length) {
+      renderComments(pictureData, startIndex, finishIndex);
+    } else {
+      finishIndex = pictureData[0].comments.length;
+      renderComments(pictureData, startIndex, finishIndex);
+      loadMoreButton.classList.add('hidden');
+    }
+    commentsCounter[0].textContent = `${finishIndex} из `;
+  }
+
   // open modal window and load data
   function openBigPicture(evt) {
     if (evt.target.closest('.picture')) {
@@ -55,18 +69,7 @@ export const interactWithBigPicture = () => {
         renderComments(pictureData, startIndex, finishIndex);
       }
       // Comments button click function
-      loadMoreButton.addEventListener('click', () => {
-        startIndex += COMMENTS_PER_STEP;
-        finishIndex += COMMENTS_PER_STEP;
-        if (finishIndex <= pictureData[0].comments.length) {
-          renderComments(pictureData, startIndex, finishIndex);
-        } else {
-          finishIndex = pictureData[0].comments.length;
-          renderComments(pictureData, startIndex, finishIndex);
-          loadMoreButton.classList.add('hidden');
-        }
-        commentsCounter[0].textContent = `${finishIndex} из`;
-      });
+      loadMoreButton.addEventListener('click', loadMoreComments);
     }
     document.addEventListener('keydown', onBigPictureEscKeydown);
   }
@@ -79,6 +82,7 @@ export const interactWithBigPicture = () => {
     startIndex = 0;
     finishIndex = COMMENTS_PER_STEP;
     loadMoreButton.classList.remove('hidden');
+    commentsCounter[0].textContent = `${finishIndex} из `;
 
     document.removeEventListener('keydown', onBigPictureEscKeydown);
   }
