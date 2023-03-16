@@ -53,7 +53,7 @@ const MIN_LIKES = 15;
 const MAX_LIKES = 200;
 const MIN_AVATAR_ID = 1;
 const MAX_AVATAR_ID = 6;
-const COMMENTS_COUNT = 10;
+const COMMENTS_COUNT = 12;
 const ARRAY_COUNT = 25;
 
 //  id
@@ -81,5 +81,3 @@ const getRandomPhotoObject = () => ({
 });
 // итоговая функция по получению массива из 25 объектов
 export const createObjects = () => Array.from({ length: ARRAY_COUNT }, getRandomPhotoObject);
-
-
