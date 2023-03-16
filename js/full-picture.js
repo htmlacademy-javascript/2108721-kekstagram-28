@@ -4,6 +4,7 @@ import { pictureData } from './main.js';
 
 export const interactWithBigPicture = () => {
   const pictureContainer = document.querySelector('.pictures');
+
   const bigPicture = document.querySelector('.big-picture');
   const bigPictureClose = document.querySelector('.big-picture__cancel');
   const bigPictureImage = bigPicture.querySelector('.big-picture__img img');
@@ -74,6 +75,7 @@ export const interactWithBigPicture = () => {
     }
     document.addEventListener('keydown', onBigPictureEscKeydown);
   }
+
   pictureContainer.addEventListener('click', openBigPicture);
 
   // close modal window
@@ -84,6 +86,7 @@ export const interactWithBigPicture = () => {
     finishIndex = COMMENTS_PER_STEP;
     loadMoreButton.classList.remove('hidden');
     commentsCounter[0].textContent = `${finishIndex} из `;
+
 
     document.removeEventListener('keydown', onBigPictureEscKeydown);
   }
