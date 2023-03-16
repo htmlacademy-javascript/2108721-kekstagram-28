@@ -2,6 +2,7 @@ export const renderComments = (pictures, startIndex, finishIndex) => {
   const commentList = document.querySelector('.social__comments');
   const commentListElement = commentList.querySelector('.social__comment');
   const commentListFragment = document.createDocumentFragment();
+
   for (let i = startIndex; i < finishIndex; i++) {
     if (startIndex === 0) {
       commentList.innerHTML = '';

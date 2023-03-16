@@ -1,6 +1,4 @@
 import { isEscapeKey } from './utils.js';
-import { DESCRIPTIONS } from './data.js';
-import { getRandomArrayElement } from './utils.js';
 import { renderComments } from './comments.js';
 import { pictureData } from './main.js';
 
@@ -38,24 +36,27 @@ export const interactWithBigPicture = () => {
     }
     commentsCounter[0].textContent = `${finishIndex} из `;
   }
-
+// перенести функции в отдельные модули. колбеки есть на обработчиках событий
   // open modal window and load data
   function openBigPicture(evt) {
-    if (evt.target.closest('.picture')) {
+    const targetPoint = evt.target.closest('.picture');
+    const targetId = Number(targetPoint.dataset.id);
+
+    if (targetPoint) {
       bigPicture.classList.remove('hidden');
       // URL
-      bigPictureImage.src = evt.target.closest('.picture').querySelector('img').src;
+      bigPictureImage.src = targetPoint.querySelector('img').src;
       // Likes
-      bigPictureLikes.textContent = evt.target.parentElement.querySelector('.picture__likes').textContent;
+      bigPictureLikes.textContent = targetPoint.querySelector('.picture__likes').textContent;
       // Comments
-      bigPictureComments.textContent = evt.target.parentElement.querySelector('.picture__comments').textContent;
+      bigPictureComments.textContent = targetPoint.querySelector('.picture__comments').textContent;
       // Description
-      bigPictureDescription.textContent = getRandomArrayElement(DESCRIPTIONS);
+      bigPictureDescription.textContent = pictureData[targetId].description;
       // Hide scroll on body
       pageBody.classList.add('modal-open');
       // comments
-      if (finishIndex >= pictureData[0].comments.length) {
-        finishIndex = pictureData[0].comments.length;
+      if (finishIndex >= pictureData[targetId].comments.length) {
+        finishIndex = pictureData[targetId].comments.length;
         renderComments(pictureData, startIndex, finishIndex);
         commentsCounter[0].textContent = `${finishIndex} из `;
         loadMoreButton.classList.add('hidden');
