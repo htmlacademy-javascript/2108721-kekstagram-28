@@ -1,9 +1,12 @@
 import { createObjects } from './data.js';
 import { renderPictures } from './pictures.js';
 import { interactWithBigPicture } from './full-picture.js';
-import './picture-load-form.js';
+import { openPictureLoadEditor } from './picture-load-form.js';
+import './load-picture-slider.js';
 
 export const pictureData = createObjects();
 renderPictures(pictureData);
 
 interactWithBigPicture();
+
+openPictureLoadEditor();
