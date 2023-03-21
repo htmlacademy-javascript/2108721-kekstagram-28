@@ -40,6 +40,9 @@ export const interactWithBigPicture = () => {
   // open modal window and load data
   function openBigPicture(evt) {
     const targetPoint = evt.target.closest('.picture');
+    if (!targetPoint) {
+      return;
+    }
     const targetId = Number(targetPoint.dataset.id);
 
     if (targetPoint) {

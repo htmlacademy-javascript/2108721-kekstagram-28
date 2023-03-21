@@ -1,16 +1,28 @@
 import { isEscapeKey } from './utils.js';
+import './picture-validation.js';
 
 export const openPictureLoadEditor = () => {
   const uploadFileInput = document.querySelector('#upload-file');
   const loadPictureEditor = document.querySelector('.img-upload__overlay');
   const pageBody = document.querySelector('body');
   const closePictureEditorButton = document.querySelector('.img-upload__cancel');
+  const uploadPictureText = document.querySelector('.text__hashtags');
+  const uploadPictureHashTags = document.querySelector('.text__description');
 
   const onPictureEditorEscKeydown = (evt) => {
     if (isEscapeKey(evt)) {
       closePictureEditor();
     }
   };
+
+  const blockEscOnInputs = (evt) => {
+    if (isEscapeKey(evt)) {
+      evt.stopPropagation();
+    }
+  };
+
+  uploadPictureHashTags.addEventListener('keydown', blockEscOnInputs);
+  uploadPictureText.addEventListener('keydown', blockEscOnInputs);
 
   uploadFileInput.onchange = () => {
     loadPictureEditor.classList.remove('hidden');
@@ -28,7 +40,7 @@ export const openPictureLoadEditor = () => {
   previewPicture.style.transform = `scale(${scaleStep})`;
 
 
-  function makeScaleSmaller () {
+  function makeScaleSmaller() {
     if (scaleControlValue.value !== scaleControlValue.min) {
       scaleControlBigger.removeAttribute('disabled', true);
       scaleControlValue.value = `${parseInt(scaleControlValue.value, 10) - 25}%`;
@@ -42,7 +54,7 @@ export const openPictureLoadEditor = () => {
 
   scaleControlSmaller.addEventListener('click', makeScaleSmaller);
 
-  function makeScaleBigger () {
+  function makeScaleBigger() {
     if (scaleControlValue.value !== scaleControlValue.max) {
       scaleControlSmaller.removeAttribute('disabled', true);
       scaleControlValue.value = `${parseInt(scaleControlValue.value, 10) + 25}%`;
@@ -60,7 +72,7 @@ export const openPictureLoadEditor = () => {
   const pictureEffectsList = pictureEffectsFieldset.querySelector('.effects__list');
   const pictureEffectInputChecked = pictureEffectsList.querySelector('[checked]');
 
-  function changeLoadPictureEffect (evt) {
+  function changeLoadPictureEffect(evt) {
     const targetPoint = evt.target.closest('.effects__item');
     const requiredClass = targetPoint.querySelector('.effects__preview').classList[1];
 
@@ -77,6 +89,7 @@ export const openPictureLoadEditor = () => {
     loadPictureEditor.classList.add('hidden');
     pageBody.classList.remove('modal-open');
     previewPicture.classList.remove(previewPicture.classList[1]);
+    pristine.reset();
     uploadFileInput.innerHTML = '';
 
     document.removeEventListener('keydown', onPictureEditorEscKeydown);

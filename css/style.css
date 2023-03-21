@@ -1408,3 +1408,15 @@ main {
 .hidden {
   display: none;
 }
+
+.img-upload__field--invalid {
+  position: relative;
+}
+
+.img-upload__field-error {
+  position: absolute;
+  left: -20%;
+  max-width: 30%;
+  color: #e90000;
+  font-weight: bold;
+}
