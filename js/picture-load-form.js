@@ -89,7 +89,7 @@ export const openPictureLoadEditor = () => {
     loadPictureEditor.classList.add('hidden');
     pageBody.classList.remove('modal-open');
     previewPicture.classList.remove(previewPicture.classList[1]);
-    pristine.reset();
+    // pristine.reset();
     uploadFileInput.innerHTML = '';
 
     document.removeEventListener('keydown', onPictureEditorEscKeydown);

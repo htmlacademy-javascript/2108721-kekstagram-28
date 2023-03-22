@@ -15,7 +15,9 @@ const pristine = new Pristine(form, {
 function validateHashtag(string) {
   const hashTags = string.toLowerCase().trim().replace(/\s\s+/g, ' ').split(' ');
   const unicalHashTags = new Set(hashTags);
-
+  if(hashTags[0] === '') {
+    return true;
+  }
   if (unicalHashTags.size !== hashTags.length) {
     return false;
   }
@@ -28,14 +30,14 @@ function validateHashtag(string) {
   return true;
 }
 
-function getSimilarTagsError (string) {
+function getSimilarTagsError(string) {
   const hashTags = string.toLowerCase().trim().replace(/\s\s+/g, ' ').split(' ');
   const unicalHashTags = new Set(hashTags);
   if (unicalHashTags.size !== hashTags.length) {
     return 'обнаружены одинаковые теги';
   }
   if (hashTags.length > HASHTAGS_MAX_QUANTITY) {
-    return `длина тегов превысила ${HASHTAGS_MAX_QUANTITY} шт.` ;
+    return `длина тегов превысила ${HASHTAGS_MAX_QUANTITY} шт.`;
   }
   if (!hashTags.every((hashtag) => regexp.test(hashtag))) {
     return 'неправильный формат тегов. Должен начинаться с <#>, и иметь хотя бы 1 символ и не быть длиннее 20 символов';
