@@ -25,7 +25,7 @@ export const interactWithBigPicture = () => {
     }
   };
 
-  function loadMoreComments () {
+  function loadMoreComments() {
     startIndex += COMMENTS_PER_STEP;
     finishIndex += COMMENTS_PER_STEP;
     if (finishIndex <= pictureData[0].comments.length) {
@@ -37,10 +37,13 @@ export const interactWithBigPicture = () => {
     }
     commentsCounter[0].textContent = `${finishIndex} из `;
   }
-// перенести функции в отдельные модули. колбеки есть на обработчиках событий
+  // перенести функции в отдельные модули. колбеки есть на обработчиках событий
   // open modal window and load data
   function openBigPicture(evt) {
     const targetPoint = evt.target.closest('.picture');
+    if (!targetPoint) {
+      return;
+    }
     const targetId = Number(targetPoint.dataset.id);
 
     if (targetPoint) {
