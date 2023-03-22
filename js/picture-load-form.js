@@ -67,29 +67,11 @@ export const openPictureLoadEditor = () => {
 
   scaleControlBigger.addEventListener('click', makeScaleBigger);
 
-  // picture effects changing
-  const pictureEffectsFieldset = document.querySelector('.img-upload__effects');
-  const pictureEffectsList = pictureEffectsFieldset.querySelector('.effects__list');
-  const pictureEffectInputChecked = pictureEffectsList.querySelector('[checked]');
-
-  function changeLoadPictureEffect(evt) {
-    const targetPoint = evt.target.closest('.effects__item');
-    const requiredClass = targetPoint.querySelector('.effects__preview').classList[1];
-
-    if (pictureEffectInputChecked) {
-      previewPicture.classList.remove(previewPicture.classList[1]);
-      previewPicture.classList.add(requiredClass);
-    }
-  }
-
-  pictureEffectsList.addEventListener('change', changeLoadPictureEffect);
-
   // close picture load window
   function closePictureEditor() {
     loadPictureEditor.classList.add('hidden');
     pageBody.classList.remove('modal-open');
     previewPicture.classList.remove(previewPicture.classList[1]);
-    // pristine.reset();
     uploadFileInput.innerHTML = '';
 
     document.removeEventListener('keydown', onPictureEditorEscKeydown);
