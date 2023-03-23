@@ -11,11 +11,12 @@ const pristine = new Pristine(form, {
   errorTextTag: 'span',
   errorTextClass: 'img-upload__field-error',
 });
+
 // hashtag validator
 function validateHashtag(string) {
   const hashTags = string.toLowerCase().trim().replace(/\s\s+/g, ' ').split(' ');
   const unicalHashTags = new Set(hashTags);
-  if(hashTags[0] === '') {
+  if (hashTags[0] === '') {
     return true;
   }
   if (unicalHashTags.size !== hashTags.length) {
@@ -48,21 +49,24 @@ function validateMessage(message) {
   return message.length <= MESSAGE_MAX_LENGTH;
 }
 
+export function callValidator() {
+  pristine.addValidator(
+    form.querySelector('#hashtags'),
+    validateHashtag,
+    getSimilarTagsError
+  );
 
-pristine.addValidator(
-  form.querySelector('#hashtags'),
-  validateHashtag,
-  getSimilarTagsError
-);
+  pristine.addValidator(
+    form.querySelector('.text__description'),
+    validateMessage,
+  );
 
-pristine.addValidator(
-  form.querySelector('.text__description'),
-  validateMessage,
-);
+  form.addEventListener('submit', (evt) => {
+    evt.preventDefault();
+    if (pristine.validate()) {
+      form.submit();
+    }
+  });
+}
 
-form.addEventListener('submit', (evt) => {
-  evt.preventDefault();
-  if (pristine.validate()) {
-    form.submit();
-  }
-});
+

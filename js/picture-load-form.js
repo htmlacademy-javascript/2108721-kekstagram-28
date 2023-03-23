@@ -1,5 +1,7 @@
 import { isEscapeKey } from './utils.js';
-import './picture-validation.js';
+import { resetEffects } from './load-picture-slider.js';
+import { callScaleRegulator } from './picture-scale.js';
+import { callValidator } from './picture-validation.js';
 
 export const openPictureLoadEditor = () => {
   const uploadFileInput = document.querySelector('#upload-file');
@@ -8,6 +10,10 @@ export const openPictureLoadEditor = () => {
   const closePictureEditorButton = document.querySelector('.img-upload__cancel');
   const uploadPictureText = document.querySelector('.text__hashtags');
   const uploadPictureHashTags = document.querySelector('.text__description');
+  const previewPicture = document.querySelector('.img-upload__preview img');
+
+  callScaleRegulator();
+  callValidator();
 
   const onPictureEditorEscKeydown = (evt) => {
     if (isEscapeKey(evt)) {
@@ -31,48 +37,14 @@ export const openPictureLoadEditor = () => {
     document.addEventListener('keydown', onPictureEditorEscKeydown);
   };
 
-  // Scale picture logic
-  const scaleControlSmaller = document.querySelector('.scale__control--smaller');
-  const scaleControlBigger = document.querySelector('.scale__control--bigger');
-  const scaleControlValue = document.querySelector('.scale__control--value');
-  const previewPicture = document.querySelector('.img-upload__preview');
-  let scaleStep = parseInt(scaleControlValue.value, 10) / 100;
-  previewPicture.style.transform = `scale(${scaleStep})`;
-
-
-  function makeScaleSmaller() {
-    if (scaleControlValue.value !== scaleControlValue.min) {
-      scaleControlBigger.removeAttribute('disabled', true);
-      scaleControlValue.value = `${parseInt(scaleControlValue.value, 10) - 25}%`;
-      scaleStep = parseInt(scaleControlValue.value, 10) / 100;
-      previewPicture.style.transform = `scale(${scaleStep})`;
-
-    } else {
-      scaleControlSmaller.setAttribute('disabled', true);
-    }
-  }
-
-  scaleControlSmaller.addEventListener('click', makeScaleSmaller);
-
-  function makeScaleBigger() {
-    if (scaleControlValue.value !== scaleControlValue.max) {
-      scaleControlSmaller.removeAttribute('disabled', true);
-      scaleControlValue.value = `${parseInt(scaleControlValue.value, 10) + 25}%`;
-      scaleStep = parseInt(scaleControlValue.value, 10) / 100;
-      previewPicture.style.transform = `scale(${scaleStep})`;
-    } else {
-      scaleControlBigger.setAttribute('disabled', true);
-    }
-  }
-
-  scaleControlBigger.addEventListener('click', makeScaleBigger);
-
-  // close picture load window
+  // close picture editor
   function closePictureEditor() {
     loadPictureEditor.classList.add('hidden');
     pageBody.classList.remove('modal-open');
     previewPicture.classList.remove(previewPicture.classList[1]);
     uploadFileInput.innerHTML = '';
+    resetEffects();
+    previewPicture.parentElement.style.transform = 'scale(1)';
 
     document.removeEventListener('keydown', onPictureEditorEscKeydown);
   }
