@@ -1,10 +1,10 @@
+const SCALE_STEP = 25;
+
 const scaleControlSmaller = document.querySelector('.scale__control--smaller');
 const scaleControlBigger = document.querySelector('.scale__control--bigger');
 const scaleControlValue = document.querySelector('.scale__control--value');
 const previewPicture = document.querySelector('.img-upload__preview');
-const SCALE_STEP = 25;
 let scaleStep = parseInt(scaleControlValue.value, 10) / 100;
-previewPicture.style.transform = `scale(${scaleStep})`;
 
 function makeScaleSmaller() {
   if (scaleControlValue.value !== scaleControlValue.min) {
@@ -27,6 +27,12 @@ function makeScaleBigger() {
     scaleControlBigger.setAttribute('disabled', true);
   }
 }
+
+export function resetScale() {
+  previewPicture.style.transform = 'scale(1)';
+}
+
+previewPicture.style.transform = `scale(${scaleStep})`;
 
 export function callScaleRegulator() {
   scaleControlBigger.addEventListener('click', makeScaleBigger);

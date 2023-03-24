@@ -2,6 +2,8 @@ import { isEscapeKey } from './utils.js';
 import { resetEffects } from './load-picture-slider.js';
 import { callScaleRegulator } from './picture-scale.js';
 import { callValidator } from './picture-validation.js';
+import { pristine } from './picture-validation.js';
+import { resetScale } from './picture-scale.js';
 
 export const openPictureLoadEditor = () => {
   const uploadFileInput = document.querySelector('#upload-file');
@@ -11,9 +13,6 @@ export const openPictureLoadEditor = () => {
   const uploadPictureText = document.querySelector('.text__hashtags');
   const uploadPictureHashTags = document.querySelector('.text__description');
   const previewPicture = document.querySelector('.img-upload__preview img');
-
-  callScaleRegulator();
-  callValidator();
 
   const onPictureEditorEscKeydown = (evt) => {
     if (isEscapeKey(evt)) {
@@ -42,12 +41,17 @@ export const openPictureLoadEditor = () => {
     loadPictureEditor.classList.add('hidden');
     pageBody.classList.remove('modal-open');
     previewPicture.classList.remove(previewPicture.classList[1]);
-    uploadFileInput.innerHTML = '';
+    uploadFileInput.value = '';
     resetEffects();
-    previewPicture.parentElement.style.transform = 'scale(1)';
+    resetScale();
+    pristine.reset();
 
     document.removeEventListener('keydown', onPictureEditorEscKeydown);
   }
 
   closePictureEditorButton.addEventListener('click', closePictureEditor);
+
+  callScaleRegulator();
+  callValidator();
 };
+

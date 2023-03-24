@@ -1,11 +1,9 @@
-import '../vendor/nouislider/nouislider.js';
-
 const sliderElement = document.querySelector('.effect-level__slider');
 const valueElement = document.querySelector('.effect-level__value');
 const pictureEffectsFieldset = document.querySelector('.img-upload__effects');
 const previewPicture = document.querySelector('.img-upload__preview img');
 const sliderContainer = document.querySelector('.img-upload__effect-level');
-
+let filterValue = '';
 let activeEffect = 'none';
 
 function hideSlider() {
@@ -78,8 +76,6 @@ noUiSlider.create(sliderElement, {
   step: 1,
   connect: 'lower',
 });
-
-let filterValue = '';
 
 sliderElement.noUiSlider.on('update', () => {
   const sliderValue = sliderElement.noUiSlider.get();
