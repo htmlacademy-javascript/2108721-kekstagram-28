@@ -1,10 +1,8 @@
 import { isEscapeKey } from './utils.js';
 import { renderComments } from './comments.js';
-import { pictureData } from './main.js';
 
-export const interactWithBigPicture = () => {
+export const interactWithBigPicture = (pictures) => {
   const pictureContainer = document.querySelector('.pictures');
-
   const bigPicture = document.querySelector('.big-picture');
   const bigPictureClose = document.querySelector('.big-picture__cancel');
   const bigPictureImage = bigPicture.querySelector('.big-picture__img img');
@@ -15,6 +13,7 @@ export const interactWithBigPicture = () => {
   const pictureCommentList = document.querySelector('.social__comments');
   const commentsCounter = document.querySelector('.social__comment-count').childNodes;
   const loadMoreButton = document.querySelector('.comments-loader');
+
   const COMMENTS_PER_STEP = 5;
   let startIndex = 0;
   let finishIndex = COMMENTS_PER_STEP;
@@ -25,26 +24,27 @@ export const interactWithBigPicture = () => {
     }
   };
 
-  function loadMoreComments() {
-    startIndex += COMMENTS_PER_STEP;
-    finishIndex += COMMENTS_PER_STEP;
-    if (finishIndex <= pictureData[0].comments.length) {
-      renderComments(pictureData, startIndex, finishIndex);
-    } else {
-      finishIndex = pictureData[0].comments.length;
-      renderComments(pictureData, startIndex, finishIndex);
-      loadMoreButton.classList.add('hidden');
-    }
-    commentsCounter[0].textContent = `${finishIndex} из `;
-  }
-  // перенести функции в отдельные модули. колбеки есть на обработчиках событий
   // open modal window and load data
   function openBigPicture(evt) {
     const targetPoint = evt.target.closest('.picture');
     if (!targetPoint) {
       return;
     }
+
     const targetId = Number(targetPoint.dataset.id);
+// работает только когда открываешь первый раз любую картинку, дальше возникает ошибка, т.к. в finishIndex попадает значение предыдущей картинки, и изза этого все ломается
+    function loadMoreComments() {
+      startIndex += COMMENTS_PER_STEP;
+      finishIndex += COMMENTS_PER_STEP;
+      if (finishIndex <= pictures[targetId].comments.length) {
+        renderComments(pictures[targetId], startIndex, finishIndex);
+      } else {
+        finishIndex = pictures[targetId].comments.length;
+        renderComments(pictures[targetId], startIndex, finishIndex);
+        loadMoreButton.classList.add('hidden');
+      }
+      commentsCounter[0].textContent = `${finishIndex} из `;
+    }
 
     if (targetPoint) {
       bigPicture.classList.remove('hidden');
@@ -55,13 +55,14 @@ export const interactWithBigPicture = () => {
       // Comments
       bigPictureComments.textContent = targetPoint.querySelector('.picture__comments').textContent;
       // Description
-      bigPictureDescription.textContent = pictureData[targetId].description;
+      bigPictureDescription.textContent = pictures[targetId].description;
       // Hide scroll on body
       pageBody.classList.add('modal-open');
       // comments
-      if (finishIndex >= pictureData[targetId].comments.length) {
-        finishIndex = pictureData[targetId].comments.length;
-        renderComments(pictureData, startIndex, finishIndex);
+
+      if (finishIndex >= pictures[targetId].comments.length) {
+        finishIndex = pictures[targetId].comments.length;
+        renderComments(pictures[targetId], startIndex, finishIndex);
         commentsCounter[0].textContent = `${finishIndex} из `;
         loadMoreButton.classList.add('hidden');
         // delete html comments
@@ -71,15 +72,13 @@ export const interactWithBigPicture = () => {
           }
         }
       } else {
-        renderComments(pictureData, startIndex, finishIndex);
+        renderComments(pictures[targetId], startIndex, finishIndex);
       }
       // Comments button click function
       loadMoreButton.addEventListener('click', loadMoreComments);
     }
     document.addEventListener('keydown', onBigPictureEscKeydown);
   }
-
-  pictureContainer.addEventListener('click', openBigPicture);
 
   // close modal window
   function closeBigPicture() {
@@ -93,5 +92,6 @@ export const interactWithBigPicture = () => {
 
     document.removeEventListener('keydown', onBigPictureEscKeydown);
   }
+  pictureContainer.addEventListener('click', openBigPicture);
   bigPictureClose.addEventListener('click', closeBigPicture);
 };

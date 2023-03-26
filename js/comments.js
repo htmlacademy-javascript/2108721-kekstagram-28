@@ -10,11 +10,12 @@ export const renderComments = (pictures, startIndex, finishIndex) => {
       commentList.innerHTML = '';
     }
     const commentElement = commentListElement.cloneNode(true);
-    commentElement.querySelector('.social__picture').src = pictures[i].comments[i].avatar;
-    commentElement.querySelector('.social__picture').alt = pictures[i].comments[i].name;
-    commentElement.querySelector('.social__text').textContent = pictures[i].comments[i].message;
+    commentElement.querySelector('.social__picture').src = pictures.comments[i].avatar;
+    commentElement.querySelector('.social__picture').alt = pictures.comments[i].name;
+    commentElement.querySelector('.social__text').textContent = pictures.comments[i].message;
 
     commentListFragment.appendChild(commentElement);
   }
   commentList.appendChild(commentListFragment);
 };
+
