@@ -12,8 +12,10 @@ const closePictureEditorButton = document.querySelector('.img-upload__cancel');
 const uploadPictureText = document.querySelector('.text__hashtags');
 const uploadPictureHashTags = document.querySelector('.text__description');
 const previewPicture = document.querySelector('.img-upload__preview img');
-const pictureForm = document.querySelector('.img-upload__form');
+const form = document.querySelector('.img-upload__form');
 const submitButton = document.querySelector('.img-upload__submit');
+const successButton = document.querySelector('.success__button');
+const successWindow = document.querySelector('.success');
 
 const SubmitButtonText = {
   IDLE: 'Сохранить',
@@ -70,13 +72,13 @@ const unblockSubmitButton = () => {
 };
 
 const setOnFormSubmit = (callback) => {
-  pictureForm.addEventListener('submit', async (evt) => {
+  form.addEventListener('submit', async (evt) => {
     evt.preventDefault();
     const isValid = pristine.validate();
 
     if (isValid) {
       blockSubmitButton();
-      await callback(new FormData(pictureForm));
+      await callback(new FormData(form));
       unblockSubmitButton();
     }
   });

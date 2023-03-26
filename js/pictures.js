@@ -1,4 +1,4 @@
-export const renderPictures = (pictures) => {
+const renderPictures = (pictures) => {
   const similarListElement = document.querySelector('.pictures');
   const similarPictureTemplate = document.querySelector('#picture')
     .content
@@ -16,3 +16,5 @@ export const renderPictures = (pictures) => {
   });
   similarListElement.appendChild(similarListFragment);
 };
+
+export {renderPictures};

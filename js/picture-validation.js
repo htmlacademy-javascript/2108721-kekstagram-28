@@ -60,13 +60,6 @@ export function callValidator() {
     form.querySelector('.text__description'),
     validateMessage,
   );
-
-  form.addEventListener('submit', (evt) => {
-    evt.preventDefault();
-    if (pristine.validate()) {
-      form.submit();
-    }
-  });
 }
 
 

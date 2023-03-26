@@ -29,24 +29,8 @@ export const interactWithBigPicture = (pictures) => {
     const targetPoint = evt.target.closest('.picture');
     if (!targetPoint) {
       return;
-    }
-
-    const targetId = Number(targetPoint.dataset.id);
-// работает только когда открываешь первый раз любую картинку, дальше возникает ошибка, т.к. в finishIndex попадает значение предыдущей картинки, и изза этого все ломается
-    function loadMoreComments() {
-      startIndex += COMMENTS_PER_STEP;
-      finishIndex += COMMENTS_PER_STEP;
-      if (finishIndex <= pictures[targetId].comments.length) {
-        renderComments(pictures[targetId], startIndex, finishIndex);
-      } else {
-        finishIndex = pictures[targetId].comments.length;
-        renderComments(pictures[targetId], startIndex, finishIndex);
-        loadMoreButton.classList.add('hidden');
-      }
-      commentsCounter[0].textContent = `${finishIndex} из `;
-    }
-
-    if (targetPoint) {
+    } else {
+      const targetId = Number(targetPoint.dataset.id);
       bigPicture.classList.remove('hidden');
       // URL
       bigPictureImage.src = targetPoint.querySelector('img').src;
@@ -59,7 +43,6 @@ export const interactWithBigPicture = (pictures) => {
       // Hide scroll on body
       pageBody.classList.add('modal-open');
       // comments
-
       if (finishIndex >= pictures[targetId].comments.length) {
         finishIndex = pictures[targetId].comments.length;
         renderComments(pictures[targetId], startIndex, finishIndex);
@@ -74,9 +57,21 @@ export const interactWithBigPicture = (pictures) => {
       } else {
         renderComments(pictures[targetId], startIndex, finishIndex);
       }
-      // Comments button click function
-      loadMoreButton.addEventListener('click', loadMoreComments);
     }
+    //работает только когда открываешь первый раз любую картинку, дальше возникает ошибка, т.к. в finishIndex попадает значение предыдущей картинки, и изза этого все ломается
+    function loadMoreComments() {
+      startIndex += COMMENTS_PER_STEP;
+      finishIndex += COMMENTS_PER_STEP;
+      if (finishIndex <= pictures[targetId].comments.length) {
+        renderComments(pictures[targetId], startIndex, finishIndex);
+      } else {
+        finishIndex = pictures[targetId].comments.length;
+        renderComments(pictures[targetId], startIndex, finishIndex);
+        loadMoreButton.classList.add('hidden');
+      }
+      commentsCounter[0].textContent = `${finishIndex} из `;
+    }
+    loadMoreButton.addEventListener('click', loadMoreComments);
     document.addEventListener('keydown', onBigPictureEscKeydown);
   }
 
@@ -88,7 +83,6 @@ export const interactWithBigPicture = (pictures) => {
     finishIndex = COMMENTS_PER_STEP;
     loadMoreButton.classList.remove('hidden');
     commentsCounter[0].textContent = `${finishIndex} из `;
-
 
     document.removeEventListener('keydown', onBigPictureEscKeydown);
   }
