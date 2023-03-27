@@ -1,5 +1,4 @@
-
-export const renderComments = (pictures, startIndex, finishIndex) => {
+const renderComments = (pictures, startIndex, finishIndex) => {
 
   const commentList = document.querySelector('.social__comments');
   const commentListElement = commentList.querySelector('.social__comment');
@@ -19,3 +18,4 @@ export const renderComments = (pictures, startIndex, finishIndex) => {
   commentList.appendChild(commentListFragment);
 };
 
+export { renderComments };

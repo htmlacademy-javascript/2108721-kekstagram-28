@@ -9,16 +9,16 @@ import { showSuccessMessage, showErrorMessage } from './message.js';
 openPictureLoadEditor();
 
 try {
-  const data = await getData();
-  renderPictures(data);
-  interactWithBigPicture(data);
+  const pictures = await getData();
+  renderPictures(pictures);
+  interactWithBigPicture(pictures);
 } catch (err) {
   showAlert(err.message);
 }
 
-setOnFormSubmit(async (data) => {
+setOnFormSubmit(async (pictures) => {
   try {
-    await sendData(data);
+    await sendData(pictures);
     closePictureEditor();
     showSuccessMessage();
   } catch {

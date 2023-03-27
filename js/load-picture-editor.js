@@ -14,8 +14,6 @@ const uploadPictureHashTags = document.querySelector('.text__description');
 const previewPicture = document.querySelector('.img-upload__preview img');
 const form = document.querySelector('.img-upload__form');
 const submitButton = document.querySelector('.img-upload__submit');
-const successButton = document.querySelector('.success__button');
-const successWindow = document.querySelector('.success');
 
 const SubmitButtonText = {
   IDLE: 'Сохранить',
@@ -29,26 +27,29 @@ const blockEscOnInputs = (evt) => {
 };
 
 const openPictureLoadEditor = () => {
-  uploadPictureHashTags.addEventListener('keydown', blockEscOnInputs);
-  uploadPictureText.addEventListener('keydown', blockEscOnInputs);
   callScaleRegulator();
   callValidator();
+
+  uploadPictureHashTags.addEventListener('keydown', blockEscOnInputs);
+  uploadPictureText.addEventListener('keydown', blockEscOnInputs);
 };
 
 uploadFileInput.onchange = () => {
+  openPictureLoadEditor();
+
   loadPictureEditor.classList.remove('hidden');
   pageBody.classList.add('modal-open');
-  openPictureLoadEditor();
 };
 
 const closePictureEditor = () => {
-  loadPictureEditor.classList.add('hidden');
-  pageBody.classList.remove('modal-open');
-  previewPicture.classList.remove(previewPicture.classList[0]);
   uploadFileInput.value = '';
   resetEffects();
   resetScale();
   pristine.reset();
+
+  loadPictureEditor.classList.add('hidden');
+  pageBody.classList.remove('modal-open');
+  previewPicture.classList.remove(previewPicture.classList[0]);
 };
 
 const onPictureEditorEscKeydown = (evt) => {
