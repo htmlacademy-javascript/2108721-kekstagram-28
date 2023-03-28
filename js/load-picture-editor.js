@@ -34,12 +34,10 @@ const openPictureLoadEditor = () => {
   uploadPictureText.addEventListener('keydown', blockEscOnInputs);
 };
 
-uploadFileInput.onchange = () => {
-  openPictureLoadEditor();
-
+uploadFileInput.addEventListener('change', () => {
   loadPictureEditor.classList.remove('hidden');
   pageBody.classList.add('modal-open');
-};
+});
 
 const closePictureEditor = () => {
   uploadFileInput.value = '';

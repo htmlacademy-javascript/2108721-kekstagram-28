@@ -1,7 +1,7 @@
 import { isEscapeKey } from './utils.js';
 import { renderComments } from './comments.js';
 
-const interactWithBigPicture = (pictures) => {
+const loadBigPicture = (pictures) => {
   const pictureContainer = document.querySelector('.pictures');
   const bigPicture = document.querySelector('.big-picture');
   const bigPictureClose = document.querySelector('.big-picture__cancel');
@@ -16,41 +16,53 @@ const interactWithBigPicture = (pictures) => {
 
   const COMMENTS_PER_STEP = 5;
 
+  let targetPoint;
+  let targetId;
   let startIndex = 0;
   let finishIndex = COMMENTS_PER_STEP;
 
-  const onBigPictureEscKeydown = (evt) => {
+  const closeBigPicture = () => {
+    bigPicture.classList.add('hidden');
+    pageBody.classList.remove('modal-open');
+    startIndex = 0;
+    finishIndex = COMMENTS_PER_STEP;
+    loadMoreButton.classList.remove('hidden');
+    commentsCounter[0].textContent = `${finishIndex} из `;
+
+    document.removeEventListener('keydown', onBigPictureEscKeydown);
+  };
+
+  function onBigPictureEscKeydown(evt) {
     if (isEscapeKey(evt)) {
       closeBigPicture();
     }
-  };
+  }
 
-  // open modal window and load data
   const openBigPicture = (evt) => {
-    const targetPoint = evt.target.closest('.picture');
+    targetPoint = evt.target.closest('.picture');
 
     if (!targetPoint) {
       return;
     } else {
-      const targetId = Number(targetPoint.dataset.id);
+      targetId = Number(targetPoint.dataset.id);
       bigPicture.classList.remove('hidden');
-      // URL
+
       bigPictureImage.src = targetPoint.querySelector('img').src;
-      // Likes
+
       bigPictureLikes.textContent = targetPoint.querySelector('.picture__likes').textContent;
-      // Comments
+
       bigPictureComments.textContent = targetPoint.querySelector('.picture__comments').textContent;
-      // Description
+
       bigPictureDescription.textContent = pictures[targetId].description;
-      // Hide scroll on body
+
       pageBody.classList.add('modal-open');
-      // comments
+
       if (finishIndex >= pictures[targetId].comments.length) {
         finishIndex = pictures[targetId].comments.length;
         renderComments(pictures[targetId], startIndex, finishIndex);
         commentsCounter[0].textContent = `${finishIndex} из `;
         loadMoreButton.classList.add('hidden');
-        // delete html comments
+
         if (finishIndex === 0) {
           while (pictureCommentList.firstChild) {
             pictureCommentList.removeChild(pictureCommentList.firstChild);
@@ -60,8 +72,6 @@ const interactWithBigPicture = (pictures) => {
         renderComments(pictures[targetId], startIndex, finishIndex);
       }
     }
-    //работает только когда открываешь первый раз любую картинку, дальше возникает ошибка, т.к. в finishIndex попадает значение предыдущей картинки, и изза этого все ломается
-
     document.addEventListener('keydown', onBigPictureEscKeydown);
   };
 
@@ -80,20 +90,8 @@ const interactWithBigPicture = (pictures) => {
 
   loadMoreButton.addEventListener('click', loadMoreComments);
 
-  // close modal window
-  const closeBigPicture = () => {
-    bigPicture.classList.add('hidden');
-    pageBody.classList.remove('modal-open');
-    startIndex = 0;
-    finishIndex = COMMENTS_PER_STEP;
-    loadMoreButton.classList.remove('hidden');
-    commentsCounter[0].textContent = `${finishIndex} из `;
-
-    document.removeEventListener('keydown', onBigPictureEscKeydown);
-  };
-
   pictureContainer.addEventListener('click', openBigPicture);
   bigPictureClose.addEventListener('click', closeBigPicture);
 };
 
-export { interactWithBigPicture };
+export { loadBigPicture };

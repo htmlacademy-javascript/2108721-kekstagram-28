@@ -1,17 +1,15 @@
-import { openPictureLoadEditor, closePictureEditor } from './load-picture-editor.js';
-import { setOnFormSubmit } from './load-picture-editor.js';
-import { interactWithBigPicture } from './load-full-picture.js';
+import { closePictureEditor, setOnFormSubmit, openPictureLoadEditor } from './load-picture-editor.js';
+import { loadBigPicture } from './open-full-picture.js';
 import { renderPictures } from './pictures.js';
 import { getData, sendData } from './api.js';
 import { showAlert } from './utils.js';
 import { showSuccessMessage, showErrorMessage } from './message.js';
 
-openPictureLoadEditor();
-
 try {
   const pictures = await getData();
   renderPictures(pictures);
-  interactWithBigPicture(pictures);
+  openPictureLoadEditor();
+  loadBigPicture(pictures);
 } catch (err) {
   showAlert(err.message);
 }
