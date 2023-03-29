@@ -15,9 +15,9 @@ try {
   showAlert(err.message);
 }
 
-setOnFormSubmit(async (data) => {
+setOnFormSubmit(async (pictures) => {
   try {
-    await sendData(data);
+    await sendData(pictures);
     closePictureEditor();
     showSuccessMessage();
   } catch {

@@ -16,7 +16,7 @@ const form = document.querySelector('.img-upload__form');
 const submitButton = document.querySelector('.img-upload__submit');
 
 const SubmitButtonText = {
-  IDLE: 'Сохранить',
+  IDLE: 'Опубликовать',
   SENDING: 'Сохраняю...'
 };
 
@@ -78,12 +78,13 @@ const setOnFormSubmit = (callback) => {
   });
 };
 
-document.addEventListener('keydown', onPictureEditorEscKeydown);
+
 closePictureEditorButton.addEventListener('click', closePictureEditor);
 
 uploadFileInput.addEventListener('change', () => {
   loadPictureEditor.classList.remove('hidden');
   pageBody.classList.add('modal-open');
+  document.addEventListener('keydown', onPictureEditorEscKeydown);
 });
 
 export { setOnFormSubmit, openPictureLoadEditor, closePictureEditor };
