@@ -6,15 +6,15 @@ const sliderContainer = document.querySelector('.img-upload__effect-level');
 let filterValue = '';
 let activeEffect = 'none';
 
-function hideSlider() {
+const hideSlider = () => {
   sliderContainer.setAttribute('hidden', 'hidden');
-}
+};
 
-function showSlider() {
+const showSlider = () => {
   sliderContainer.removeAttribute('hidden');
-}
+};
 
-function updateSlider(value) {
+const updateSlider = (value) => {
   if (value === 'none') {
     sliderElement.noUiSlider.updateOptions({
       range: {
@@ -65,7 +65,14 @@ function updateSlider(value) {
       step: 0.1,
     });
   }
-}
+};
+
+const resetEffects = () => {
+  previewPicture.classList.remove(previewPicture.classList[0]);
+  updateSlider('none');
+  previewPicture.removeAttribute('style', `filter: ${filterValue}`);
+  hideSlider();
+};
 
 noUiSlider.create(sliderElement, {
   range: {
@@ -115,9 +122,4 @@ pictureEffectsFieldset.addEventListener('change', (evt) => {
 
 hideSlider();
 
-export function resetEffects() {
-  previewPicture.classList.remove(previewPicture.classList[0]);
-  updateSlider('none');
-  previewPicture.removeAttribute('style', `filter: ${filterValue}`);
-  hideSlider();
-}
+export { resetEffects };

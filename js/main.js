@@ -1,13 +1,26 @@
-import { createObjects } from './data.js';
+import { closePictureEditor, setOnFormSubmit, openPictureLoadEditor } from './load-picture-editor.js';
+import { loadBigPicture } from './open-full-picture.js';
 import { renderPictures } from './pictures.js';
-import { interactWithBigPicture } from './full-picture.js';
-import { openPictureLoadEditor } from './picture-load-form.js';
-import './load-picture-slider.js';
-import './picture-validation.js';
+import { getData, sendData } from './api.js';
+import { showAlert } from './utils.js';
+import { showSuccessMessage, showErrorMessage } from './message.js';
 
-export const pictureData = createObjects();
-renderPictures(pictureData);
 
-interactWithBigPicture();
+try {
+  const data = await getData();
+  renderPictures(data);
+  openPictureLoadEditor();
+  loadBigPicture(data);
+} catch (err) {
+  showAlert(err.message);
+}
 
-openPictureLoadEditor();
+setOnFormSubmit(async (pictures) => {
+  try {
+    await sendData(pictures);
+    closePictureEditor();
+    showSuccessMessage();
+  } catch {
+    showErrorMessage();
+  }
+});
