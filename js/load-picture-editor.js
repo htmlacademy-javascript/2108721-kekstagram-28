@@ -15,6 +15,8 @@ const previewPicture = document.querySelector('.img-upload__preview img');
 const form = document.querySelector('.img-upload__form');
 const submitButton = document.querySelector('.img-upload__submit');
 
+const FILE_TYPES = ['gif', 'jpg', 'jpeg', 'png'];
+
 const SubmitButtonText = {
   IDLE: 'Опубликовать',
   SENDING: 'Сохраняю...'
@@ -41,7 +43,6 @@ const closePictureEditor = () => {
   pristine.reset();
   uploadPictureText.value = '';
   uploadPictureHashTags.value = '';
-
 
   loadPictureEditor.classList.add('hidden');
   pageBody.classList.remove('modal-open');
@@ -78,13 +79,20 @@ const setOnFormSubmit = (callback) => {
   });
 };
 
-
 closePictureEditorButton.addEventListener('click', closePictureEditor);
 
 uploadFileInput.addEventListener('change', () => {
-  loadPictureEditor.classList.remove('hidden');
-  pageBody.classList.add('modal-open');
-  document.addEventListener('keydown', onPictureEditorEscKeydown);
+  const file = uploadFileInput.files[0];
+  const fileName = file.name.toLowerCase();
+
+  const matches = FILE_TYPES.some((it) => fileName.endsWith(it));
+
+  if (matches) {
+    previewPicture.src = URL.createObjectURL(file);
+    loadPictureEditor.classList.remove('hidden');
+    pageBody.classList.add('modal-open');
+    document.addEventListener('keydown', onPictureEditorEscKeydown);
+  }
 });
 
 export { setOnFormSubmit, openPictureLoadEditor, closePictureEditor };
