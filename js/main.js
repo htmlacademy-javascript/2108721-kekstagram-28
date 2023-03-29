@@ -5,18 +5,19 @@ import { getData, sendData } from './api.js';
 import { showAlert } from './utils.js';
 import { showSuccessMessage, showErrorMessage } from './message.js';
 
+
 try {
-  const pictures = await getData();
-  renderPictures(pictures);
+  const data = await getData();
+  renderPictures(data);
   openPictureLoadEditor();
-  loadBigPicture(pictures);
+  loadBigPicture(data);
 } catch (err) {
   showAlert(err.message);
 }
 
-setOnFormSubmit(async (pictures) => {
+setOnFormSubmit(async (data) => {
   try {
-    await sendData(pictures);
+    await sendData(data);
     closePictureEditor();
     showSuccessMessage();
   } catch {

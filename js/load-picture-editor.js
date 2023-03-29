@@ -9,8 +9,8 @@ const uploadFileInput = document.querySelector('#upload-file');
 const loadPictureEditor = document.querySelector('.img-upload__overlay');
 const pageBody = document.querySelector('body');
 const closePictureEditorButton = document.querySelector('.img-upload__cancel');
-const uploadPictureText = document.querySelector('.text__hashtags');
-const uploadPictureHashTags = document.querySelector('.text__description');
+const uploadPictureHashTags = document.querySelector('.text__hashtags');
+const uploadPictureText = document.querySelector('.text__description');
 const previewPicture = document.querySelector('.img-upload__preview img');
 const form = document.querySelector('.img-upload__form');
 const submitButton = document.querySelector('.img-upload__submit');
@@ -34,16 +34,14 @@ const openPictureLoadEditor = () => {
   uploadPictureText.addEventListener('keydown', blockEscOnInputs);
 };
 
-uploadFileInput.addEventListener('change', () => {
-  loadPictureEditor.classList.remove('hidden');
-  pageBody.classList.add('modal-open');
-});
-
 const closePictureEditor = () => {
   uploadFileInput.value = '';
   resetEffects();
   resetScale();
   pristine.reset();
+  uploadPictureText.value = '';
+  uploadPictureHashTags.value = '';
+
 
   loadPictureEditor.classList.add('hidden');
   pageBody.classList.remove('modal-open');
@@ -56,9 +54,6 @@ const onPictureEditorEscKeydown = (evt) => {
     document.removeEventListener('keydown', onPictureEditorEscKeydown);
   }
 };
-
-document.addEventListener('keydown', onPictureEditorEscKeydown);
-closePictureEditorButton.addEventListener('click', closePictureEditor);
 
 const blockSubmitButton = () => {
   submitButton.disabled = true;
@@ -82,5 +77,13 @@ const setOnFormSubmit = (callback) => {
     }
   });
 };
+
+document.addEventListener('keydown', onPictureEditorEscKeydown);
+closePictureEditorButton.addEventListener('click', closePictureEditor);
+
+uploadFileInput.addEventListener('change', () => {
+  loadPictureEditor.classList.remove('hidden');
+  pageBody.classList.add('modal-open');
+});
 
 export { setOnFormSubmit, openPictureLoadEditor, closePictureEditor };
