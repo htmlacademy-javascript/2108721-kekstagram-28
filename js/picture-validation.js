@@ -1,6 +1,7 @@
+const HASHTAGS_MAX_QUANTITY = 5;
+
 const form = document.querySelector('.img-upload__form');
 const regexp = /^#[a-zа-яё0-9]{1,19}$/i;
-const HASHTAGS_MAX_QUANTITY = 5;
 
 const pristine = new Pristine(form, {
   classTo: 'img-upload__field-wrapper',
