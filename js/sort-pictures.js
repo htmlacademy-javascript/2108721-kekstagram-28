@@ -2,10 +2,11 @@ import { closePictureEditor, setOnFormSubmit, openPictureLoadEditor } from './lo
 import { loadBigPicture } from './open-full-picture.js';
 import { renderPictures } from './pictures.js';
 import { getData, sendData } from './api.js';
-import { showAlert } from './utils.js';
+import { debounce, showAlert } from './utils.js';
 import { showSuccessMessage, showErrorMessage } from './message.js';
 
 const RANDOM_PICTURES_LENGTH = 10;
+const RERENDERER_DELAY = 500;
 
 const filtersBlock = document.querySelector('.img-filters');
 const filterDefaultButton = document.querySelector('#filter-default');
@@ -37,54 +38,54 @@ const deletePreviousPictures = () => {
 };
 
 // по умолч
-function sortDefault() {
+const sortDefault = (debounce(() => {
   deletePreviousPictures();
   renderPictures(data);
-  loadBigPicture(data);
-}
+}, RERENDERER_DELAY));
 
 // случайные
-const sortRandomData = () => {
+const sortRandomData = (debounce(() => {
+  deletePreviousPictures();
   const randomData = data
     .slice()
     .sort(() => Math.random() - 0.5)
     .slice(0, RANDOM_PICTURES_LENGTH);
-  deletePreviousPictures();
   renderPictures(randomData);
-  loadBigPicture(randomData);
-};
+}, RERENDERER_DELAY));
 
 // по убыванию кол-ва комментов
-const sortComments = () => {
+const sortComments = (debounce(() => {
   deletePreviousPictures();
   const commentsData = data
     .slice()
     .sort((a, b) => b.comments.length - a.comments.length);
   renderPictures(commentsData);
-  loadBigPicture(commentsData);
-};
+}, RERENDERER_DELAY));
 
-
-const sortPictures = async () => {
+const getDefaultData = async () => {
   try {
     data = await getData();
-    sortDefault();
+    renderPictures(data);
+    loadBigPicture(data);
     filtersBlock.classList.remove('img-filters--inactive');
     openPictureLoadEditor();
   } catch (err) {
     showAlert(err.message);
   }
+};
 
-  setOnFormSubmit(async (pictures) => {
-    try {
-      await sendData(pictures);
-      closePictureEditor();
-      showSuccessMessage();
-    } catch {
-      showErrorMessage();
-    }
-  });
+setOnFormSubmit(async (pictures) => {
+  try {
+    await sendData(pictures);
+    closePictureEditor();
+    showSuccessMessage();
+    loadBigPicture(data);
+  } catch {
+    showErrorMessage();
+  }
+});
 
+const sortPictures = () => {
   sortButtons.forEach((button) => {
     button.addEventListener('click', changeSortClass);
   });
@@ -93,6 +94,6 @@ const sortPictures = async () => {
   filterDefaultButton.addEventListener('click', sortDefault);
 };
 
-export { sortPictures};
+export { sortPictures, getDefaultData, setOnFormSubmit };
 
-// доделать: 1. комменты и description криво при сортировке. 2. устранить дребезг
+// доделать: 1. комменты криво при сортировке.

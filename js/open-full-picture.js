@@ -21,40 +21,17 @@ const loadBigPicture = (pictures) => {
   let startIndex = 0;
   let finishIndex = COMMENTS_PER_STEP;
 
-  const closeBigPicture = () => {
-    bigPicture.classList.add('hidden');
-    pageBody.classList.remove('modal-open');
-    startIndex = 0;
-    finishIndex = COMMENTS_PER_STEP;
-    loadMoreButton.classList.remove('hidden');
-    commentsCounter[0].textContent = `${finishIndex} из `;
-
-    document.removeEventListener('keydown', onBigPictureEscKeydown);
-  };
-
-  function onBigPictureEscKeydown(evt) {
-    if (isEscapeKey(evt)) {
-      closeBigPicture();
-    }
-  }
-
   const openBigPicture = (evt) => {
     targetPoint = evt.target.closest('.picture');
-
     if (!targetPoint) {
       return;
     } else {
       targetId = Number(targetPoint.dataset.id);
       bigPicture.classList.remove('hidden');
-
       bigPictureImage.src = targetPoint.querySelector('img').src;
-
       bigPictureLikes.textContent = targetPoint.querySelector('.picture__likes').textContent;
-
       bigPictureComments.textContent = targetPoint.querySelector('.picture__comments').textContent;
-
       bigPictureDescription.textContent = pictures[targetId].description;
-
       pageBody.classList.add('modal-open');
 
       if (finishIndex >= pictures[targetId].comments.length) {
@@ -75,6 +52,23 @@ const loadBigPicture = (pictures) => {
     document.addEventListener('keydown', onBigPictureEscKeydown);
   };
 
+  const closeBigPicture = () => {
+    bigPicture.classList.add('hidden');
+    pageBody.classList.remove('modal-open');
+    startIndex = 0;
+    finishIndex = COMMENTS_PER_STEP;
+    loadMoreButton.classList.remove('hidden');
+    commentsCounter[0].textContent = `${finishIndex} из `;
+
+    document.removeEventListener('keydown', onBigPictureEscKeydown);
+  };
+
+  function onBigPictureEscKeydown(evt) {
+    if (isEscapeKey(evt)) {
+      closeBigPicture();
+    }
+  }
+
   const loadMoreComments = () => {
     startIndex += COMMENTS_PER_STEP;
     finishIndex += COMMENTS_PER_STEP;
@@ -89,7 +83,6 @@ const loadBigPicture = (pictures) => {
   };
 
   loadMoreButton.addEventListener('click', loadMoreComments);
-
   pictureContainer.addEventListener('click', openBigPicture);
   bigPictureClose.addEventListener('click', closeBigPicture);
 };
