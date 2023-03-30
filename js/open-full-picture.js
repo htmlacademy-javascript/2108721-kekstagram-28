@@ -72,7 +72,7 @@ const loadBigPicture = (pictures) => {
   const loadMoreComments = () => {
     startIndex += COMMENTS_PER_STEP;
     finishIndex += COMMENTS_PER_STEP;
-    if (finishIndex <= pictures[targetId].comments.length) {
+    if (finishIndex < pictures[targetId].comments.length) {
       renderComments(pictures[targetId], startIndex, finishIndex);
     } else {
       finishIndex = pictures[targetId].comments.length;
