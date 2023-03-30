@@ -2,7 +2,7 @@ import { setOnFormSubmit } from './load-picture-editor.js';
 import { renderPictures } from './pictures.js';
 import { debounce } from './utils.js';
 
-const RANDOM_PICTURES_LENGTH = 10;
+const RANDOM_PICTURES_COUNT = 10;
 const RERENDERER_DELAY = 500;
 
 const filtersBlock = document.querySelector('.img-filters');
@@ -50,7 +50,7 @@ const sortRandomData = (debounce((data) => {
   const randomData = data
     .slice()
     .sort(() => Math.random() - 0.5)
-    .slice(0, RANDOM_PICTURES_LENGTH);
+    .slice(0, RANDOM_PICTURES_COUNT);
   renderPictures(randomData);
 }, RERENDERER_DELAY));
 

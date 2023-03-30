@@ -3,6 +3,7 @@ import { showErrorMessage, showSuccessMessage } from './message.js';
 import { showAlert } from './utils.js';
 
 const URL = 'https://28.javascript.pages.academy/kekstagram';
+
 const Route = {
   GET_DATA: '/data',
   SEND_DATA: '/',
