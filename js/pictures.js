@@ -3,7 +3,6 @@ const renderPictures = (pictures) => {
   const similarPictureTemplate = document.querySelector('#picture')
     .content
     .querySelector('.picture');
-
   const similarListFragment = document.createDocumentFragment();
 
   pictures.forEach(({ url, comments, likes, id }) => {
@@ -17,4 +16,4 @@ const renderPictures = (pictures) => {
   similarListElement.appendChild(similarListFragment);
 };
 
-export {renderPictures};
+export { renderPictures };
