@@ -12,6 +12,7 @@ const closeMessageWindow = (evt) => {
     errorWindow.classList.add('hidden');
     document.removeEventListener('click', closeMessageWindow);
   }
+  document.addEventListener('keydown', onPictureEditorEscKeydown);
 };
 
 const closeMessageWindowByEsc = () => {
