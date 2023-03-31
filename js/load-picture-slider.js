@@ -105,7 +105,7 @@ sliderElement.noUiSlider.on('update', () => {
   }
 });
 
-pictureEffectsFieldset.addEventListener('change', (evt) => {
+const showPictureEffectSlider = (evt) => {
   const effect = evt.target.closest('input[type="radio"]').value;
   activeEffect = effect;
 
@@ -118,7 +118,9 @@ pictureEffectsFieldset.addEventListener('change', (evt) => {
   previewPicture.className = `effects__preview--${effect}`;
 
   updateSlider(effect);
-});
+};
+
+pictureEffectsFieldset.addEventListener('change', showPictureEffectSlider);
 
 hideSlider();
 

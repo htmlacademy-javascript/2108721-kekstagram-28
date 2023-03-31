@@ -5,6 +5,13 @@ import { callValidator } from './picture-validation.js';
 import { pristine } from './picture-validation.js';
 import { resetScale } from './picture-scale.js';
 
+const FILE_TYPES = ['gif', 'jpg', 'jpeg', 'png'];
+
+const SubmitButtonText = {
+  IDLE: 'Опубликовать',
+  SENDING: 'Сохраняю...'
+};
+
 const uploadFileInput = document.querySelector('#upload-file');
 const loadPictureEditor = document.querySelector('.img-upload__overlay');
 const pageBody = document.querySelector('body');
@@ -15,25 +22,10 @@ const previewPicture = document.querySelector('.img-upload__preview img');
 const form = document.querySelector('.img-upload__form');
 const submitButton = document.querySelector('.img-upload__submit');
 
-const FILE_TYPES = ['gif', 'jpg', 'jpeg', 'png'];
-
-const SubmitButtonText = {
-  IDLE: 'Опубликовать',
-  SENDING: 'Сохраняю...'
-};
-
 const blockEscOnInputs = (evt) => {
   if (isEscapeKey(evt)) {
     evt.stopPropagation();
   }
-};
-
-const openPictureLoadEditor = () => {
-  callScaleRegulator();
-  callValidator();
-
-  uploadPictureHashTags.addEventListener('keydown', blockEscOnInputs);
-  uploadPictureText.addEventListener('keydown', blockEscOnInputs);
 };
 
 const closePictureEditor = () => {
@@ -47,6 +39,15 @@ const closePictureEditor = () => {
   loadPictureEditor.classList.add('hidden');
   pageBody.classList.remove('modal-open');
   previewPicture.classList.remove(previewPicture.classList[0]);
+};
+
+const openPictureLoadEditor = () => {
+  callScaleRegulator();
+  callValidator();
+
+  uploadPictureHashTags.addEventListener('keydown', blockEscOnInputs);
+  uploadPictureText.addEventListener('keydown', blockEscOnInputs);
+  closePictureEditorButton.addEventListener('click', closePictureEditor);
 };
 
 const onPictureEditorEscKeydown = (evt) => {
@@ -79,9 +80,7 @@ const setOnFormSubmit = (callback) => {
   });
 };
 
-closePictureEditorButton.addEventListener('click', closePictureEditor);
-
-uploadFileInput.addEventListener('change', () => {
+const loadUserPicture = () => {
   const file = uploadFileInput.files[0];
   const fileName = file.name.toLowerCase();
 
@@ -91,8 +90,10 @@ uploadFileInput.addEventListener('change', () => {
     previewPicture.src = URL.createObjectURL(file);
     loadPictureEditor.classList.remove('hidden');
     pageBody.classList.add('modal-open');
-    document.addEventListener('keydown', onPictureEditorEscKeydown);
   }
-});
+  document.addEventListener('keydown', onPictureEditorEscKeydown);
+};
 
-export { setOnFormSubmit, openPictureLoadEditor, closePictureEditor };
+uploadFileInput.addEventListener('change', loadUserPicture);
+
+export { setOnFormSubmit, openPictureLoadEditor, closePictureEditor, onPictureEditorEscKeydown };

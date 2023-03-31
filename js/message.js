@@ -1,3 +1,4 @@
+import { onPictureEditorEscKeydown } from './load-picture-editor.js';
 import { isEscapeKey } from './utils.js';
 
 const closeMessageWindow = (evt) => {
@@ -11,6 +12,7 @@ const closeMessageWindow = (evt) => {
     errorWindow.classList.add('hidden');
     document.removeEventListener('click', closeMessageWindow);
   }
+  document.addEventListener('keydown', onPictureEditorEscKeydown);
 };
 
 const closeMessageWindowByEsc = () => {
@@ -43,6 +45,7 @@ const showErrorMessage = () => {
   const errorMessage = errorMessageBlock.cloneNode(true);
   document.body.appendChild(errorMessage);
 
+  document.removeEventListener('keydown', onPictureEditorEscKeydown);
   document.addEventListener('click', closeMessageWindow);
   document.addEventListener('keydown', onPictureLoadMessage);
 };
