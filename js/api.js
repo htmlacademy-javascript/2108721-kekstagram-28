@@ -1,6 +1,6 @@
 const URL = 'https://28.javascript.pages.academy/kekstagram';
 
-import { closePictureEditor, setOnFormSubmit } from './load-picture-editor.js';
+import { closePictureEditor } from './load-picture-editor.js';
 import { showErrorMessage, showSuccessMessage } from './message.js';
 import { showAlert } from './utils.js';
 
@@ -42,15 +42,16 @@ const getDefaultData = async () => {
   }
 };
 
-setOnFormSubmit(async (pictures) => {
+const sendNewPicture = (async (pictures) => {
   try {
     await sendData(pictures);
     closePictureEditor();
     showSuccessMessage();
-  } catch {
+  } catch (err) {
+    showAlert(err.message);
     showErrorMessage();
   }
 });
 
-export { getData, sendData, getDefaultData };
+export { getData, sendData, getDefaultData, sendNewPicture };
 
