@@ -1,6 +1,8 @@
 import { isEscapeKey } from './utils.js';
 import { renderComments } from './comments.js';
 
+const COMMENTS_PER_STEP = 5;
+
 const loadBigPicture = (pictures) => {
   const pictureContainer = document.querySelector('.pictures');
   const bigPicture = document.querySelector('.big-picture');
@@ -13,8 +15,6 @@ const loadBigPicture = (pictures) => {
   const pictureCommentList = document.querySelector('.social__comments');
   const commentsCounter = document.querySelector('.social__comment-count').childNodes;
   const loadMoreButton = document.querySelector('.comments-loader');
-
-  const COMMENTS_PER_STEP = 5;
 
   let targetPoint;
   let targetId;

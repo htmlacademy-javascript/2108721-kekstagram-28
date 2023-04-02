@@ -13,8 +13,6 @@ const makeScaleSmaller = () => {
     scaleControlValue.value = `${parseInt(scaleControlValue.value, 10) - SCALE_STEP}%`;
     scaleStep = parseInt(scaleControlValue.value, 10) / 100;
     previewPicture.style.transform = `scale(${scaleStep})`;
-  } else {
-    scaleControlSmaller.setAttribute('disabled', true);
   }
 };
 
@@ -24,16 +22,12 @@ const makeScaleBigger = () => {
     scaleControlValue.value = `${parseInt(scaleControlValue.value, 10) + SCALE_STEP}%`;
     scaleStep = parseInt(scaleControlValue.value, 10) / 100;
     previewPicture.style.transform = `scale(${scaleStep})`;
-  } else {
-    scaleControlBigger.setAttribute('disabled', true);
   }
 };
 
 const resetScale = () => {
   previewPicture.style.transform = 'scale(1)';
   scaleControlValue.value = `${SCALE_DEFAULT}%`;
-  scaleControlSmaller.removeEventListener('click', makeScaleSmaller);
-  scaleControlBigger.removeEventListener('click', makeScaleBigger);
 };
 
 const callScaleRegulator = () => {
