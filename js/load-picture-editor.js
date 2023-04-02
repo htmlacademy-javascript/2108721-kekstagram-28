@@ -41,7 +41,7 @@ const closePictureEditor = () => {
   previewPicture.classList.remove(previewPicture.classList[0]);
 };
 
-const openPictureLoadEditor = () => {
+const activatePictureLoadEditor = () => {
   callScaleRegulator();
   callValidator();
 
@@ -96,4 +96,4 @@ const loadUserPicture = () => {
 
 uploadFileInput.addEventListener('change', loadUserPicture);
 
-export { setOnFormSubmit, openPictureLoadEditor, closePictureEditor, onPictureEditorEscKeydown };
+export { setOnFormSubmit, activatePictureLoadEditor, closePictureEditor, onPictureEditorEscKeydown };

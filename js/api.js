@@ -1,8 +1,8 @@
-const URL = 'https://28.javascript.pages.academy/kekstagram';
-
 import { closePictureEditor } from './load-picture-editor.js';
 import { showErrorMessage, showSuccessMessage } from './message.js';
 import { showAlert } from './utils.js';
+
+const URL = 'https://28.javascript.pages.academy/kekstagram';
 
 const Route = {
   GET_DATA: '/data',
