@@ -1,22 +1,26 @@
 import { onPictureEditorEscKeydown } from './load-picture-editor.js';
 import { isEscapeKey } from './utils.js';
 
-const closeMessageWindow = (evt) => {
+const pageBody = document.querySelector('body');
+
+const onMessageWindowClose = (evt) => {
   const succesWindow = evt.target.closest('.success');
   const errorWindow = evt.target.closest('.error');
   if (evt.target.classList.contains('success__button') || evt.target.classList.contains('success')) {
+    pageBody.removeChild(succesWindow);
     succesWindow.classList.add('hidden');
-    document.removeEventListener('click', closeMessageWindow);
+    document.removeEventListener('click', onMessageWindowClose);
   }
   if (evt.target.classList.contains('error__button') || evt.target.classList.contains('error')) {
+    pageBody.removeChild(errorWindow);
     errorWindow.classList.add('hidden');
-    document.removeEventListener('click', closeMessageWindow);
+    document.removeEventListener('click', onMessageWindowClose);
   }
+  document.removeEventListener('keydown', onPictureMessageLoad);
   document.addEventListener('keydown', onPictureEditorEscKeydown);
 };
 
 const closeMessageWindowByEsc = () => {
-  const pageBody = document.querySelector('body');
   const succesWindow = document.querySelector('.success');
   const errorWindow = document.querySelector('.error');
   if (succesWindow) {
@@ -34,8 +38,8 @@ const showSuccessMessage = () => {
   const successMessage = successMessageBlock.cloneNode(true);
   document.body.appendChild(successMessage);
 
-  document.addEventListener('click', closeMessageWindow);
-  document.addEventListener('keydown', onPictureLoadMessage);
+  document.addEventListener('click', onMessageWindowClose);
+  document.addEventListener('keydown', onPictureMessageLoad);
 };
 
 const showErrorMessage = () => {
@@ -46,14 +50,14 @@ const showErrorMessage = () => {
   document.body.appendChild(errorMessage);
 
   document.removeEventListener('keydown', onPictureEditorEscKeydown);
-  document.addEventListener('click', closeMessageWindow);
-  document.addEventListener('keydown', onPictureLoadMessage);
+  document.addEventListener('click', onMessageWindowClose);
+  document.addEventListener('keydown', onPictureMessageLoad);
 };
 
-function onPictureLoadMessage(evt) {
+function onPictureMessageLoad(evt) {
   if (isEscapeKey(evt)) {
     closeMessageWindowByEsc();
-    document.removeEventListener('keydown', onPictureLoadMessage);
+    document.removeEventListener('click', onMessageWindowClose);
   }
 }
 

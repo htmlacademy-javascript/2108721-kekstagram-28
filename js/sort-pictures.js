@@ -11,12 +11,10 @@ const filterRandomButton = document.querySelector('#filter-random');
 const filterDiscussedButton = document.querySelector('#filter-discussed');
 const similarListElemets = document.querySelector('.pictures');
 const sortButtons = document.querySelectorAll('.img-filters__button');
-const childSimilarElements = similarListElemets.children;
 
 const showSortButtons = () => {
   filtersBlock.classList.remove('img-filters--inactive');
 };
-
 
 const changeSortClass = (evt) => {
   const activeClass = 'img-filters__button--active';
@@ -30,21 +28,15 @@ const changeSortClass = (evt) => {
 };
 
 const deletePreviousPictures = () => {
-  for (let i = 0; i < childSimilarElements.length; i++) {
-    if (childSimilarElements[i].classList.contains('picture')) {
-      similarListElemets.removeChild(childSimilarElements[i]);
-      i--;
-    }
-  }
+  const pictureElements = similarListElemets.querySelectorAll('.picture');
+  pictureElements.forEach((item) => item.remove());
 };
 
-// по умолч
 const sortDefault = (debounce((data) => {
   deletePreviousPictures();
   renderPictures(data);
 }, RERENDERER_DELAY));
 
-// случайные
 const sortRandomData = (debounce((data) => {
   deletePreviousPictures();
   const randomData = data
@@ -54,7 +46,6 @@ const sortRandomData = (debounce((data) => {
   renderPictures(randomData);
 }, RERENDERER_DELAY));
 
-// по убыванию кол-ва комментов
 const sortComments = (debounce((data) => {
   deletePreviousPictures();
   const commentsData = data
