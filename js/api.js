@@ -1,4 +1,4 @@
-import { closePictureEditor } from './load-picture-editor.js';
+import { onPictureEditorClose } from './load-picture-editor.js';
 import { showErrorMessage, showSuccessMessage } from './message.js';
 import { showAlert } from './utils.js';
 
@@ -6,7 +6,7 @@ const URL = 'https://28.javascript.pages.academy/kekstagram';
 
 const Route = {
   GET_DATA: '/data',
-  SEND_DATA: '/',
+  // SEND_DATA: '/',
 };
 const Method = {
   GET: 'GET',
@@ -45,7 +45,7 @@ const getDefaultData = async () => {
 const sendNewPicture = (async (pictures) => {
   try {
     await sendData(pictures);
-    closePictureEditor();
+    onPictureEditorClose();
     showSuccessMessage();
   } catch (err) {
     showAlert(err.message);

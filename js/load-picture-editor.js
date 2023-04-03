@@ -22,13 +22,13 @@ const previewPicture = document.querySelector('.img-upload__preview img');
 const form = document.querySelector('.img-upload__form');
 const submitButton = document.querySelector('.img-upload__submit');
 
-const blockEscOnInputs = (evt) => {
+const OnInputsBlockEscape = (evt) => {
   if (isEscapeKey(evt)) {
     evt.stopPropagation();
   }
 };
 
-const closePictureEditor = () => {
+const onPictureEditorClose = () => {
   uploadFileInput.value = '';
   resetEffects();
   resetScale();
@@ -45,14 +45,14 @@ const activatePictureLoadEditor = () => {
   callScaleRegulator();
   callValidator();
 
-  uploadPictureHashTags.addEventListener('keydown', blockEscOnInputs);
-  uploadPictureText.addEventListener('keydown', blockEscOnInputs);
-  closePictureEditorButton.addEventListener('click', closePictureEditor);
+  uploadPictureHashTags.addEventListener('keydown', OnInputsBlockEscape);
+  uploadPictureText.addEventListener('keydown', OnInputsBlockEscape);
+  closePictureEditorButton.addEventListener('click', onPictureEditorClose);
 };
 
 const onPictureEditorEscKeydown = (evt) => {
   if (isEscapeKey(evt)) {
-    closePictureEditor();
+    onPictureEditorClose();
     document.removeEventListener('keydown', onPictureEditorEscKeydown);
   }
 };
@@ -80,7 +80,7 @@ const setOnFormSubmit = (callback) => {
   });
 };
 
-const loadUserPicture = () => {
+const onUserPictureLoad = () => {
   const file = uploadFileInput.files[0];
   const fileName = file.name.toLowerCase();
 
@@ -94,6 +94,6 @@ const loadUserPicture = () => {
   document.addEventListener('keydown', onPictureEditorEscKeydown);
 };
 
-uploadFileInput.addEventListener('change', loadUserPicture);
+uploadFileInput.addEventListener('change', onUserPictureLoad);
 
-export { setOnFormSubmit, activatePictureLoadEditor, closePictureEditor, onPictureEditorEscKeydown };
+export { setOnFormSubmit, activatePictureLoadEditor, onPictureEditorClose, onPictureEditorEscKeydown };

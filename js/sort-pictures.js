@@ -11,7 +11,6 @@ const filterRandomButton = document.querySelector('#filter-random');
 const filterDiscussedButton = document.querySelector('#filter-discussed');
 const similarListElemets = document.querySelector('.pictures');
 const sortButtons = document.querySelectorAll('.img-filters__button');
-const childSimilarElements = similarListElemets.children;
 
 const showSortButtons = () => {
   filtersBlock.classList.remove('img-filters--inactive');
@@ -30,12 +29,8 @@ const changeSortClass = (evt) => {
 };
 
 const deletePreviousPictures = () => {
-  for (let i = 0; i < childSimilarElements.length; i++) {
-    if (childSimilarElements[i].classList.contains('picture')) {
-      similarListElemets.removeChild(childSimilarElements[i]);
-      i--;
-    }
-  }
+  const pictureElements = similarListElemets.querySelectorAll('.picture');
+  pictureElements.forEach((item) => item.remove());
 };
 
 // по умолч
