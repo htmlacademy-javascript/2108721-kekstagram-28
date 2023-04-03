@@ -16,7 +16,6 @@ const showSortButtons = () => {
   filtersBlock.classList.remove('img-filters--inactive');
 };
 
-
 const changeSortClass = (evt) => {
   const activeClass = 'img-filters__button--active';
   const clickedButton = evt.target;
@@ -33,13 +32,11 @@ const deletePreviousPictures = () => {
   pictureElements.forEach((item) => item.remove());
 };
 
-// по умолч
 const sortDefault = (debounce((data) => {
   deletePreviousPictures();
   renderPictures(data);
 }, RERENDERER_DELAY));
 
-// случайные
 const sortRandomData = (debounce((data) => {
   deletePreviousPictures();
   const randomData = data
@@ -49,7 +46,6 @@ const sortRandomData = (debounce((data) => {
   renderPictures(randomData);
 }, RERENDERER_DELAY));
 
-// по убыванию кол-ва комментов
 const sortComments = (debounce((data) => {
   deletePreviousPictures();
   const commentsData = data
