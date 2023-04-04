@@ -22,7 +22,7 @@ const previewPicture = document.querySelector('.img-upload__preview img');
 const form = document.querySelector('.img-upload__form');
 const submitButton = document.querySelector('.img-upload__submit');
 
-const OnInputsBlockEscape = (evt) => {
+const onInputsBlockEscape = (evt) => {
   if (isEscapeKey(evt)) {
     evt.stopPropagation();
   }
@@ -45,8 +45,8 @@ const activatePictureLoadEditor = () => {
   callScaleRegulator();
   callValidator();
 
-  uploadPictureHashTags.addEventListener('keydown', OnInputsBlockEscape);
-  uploadPictureText.addEventListener('keydown', OnInputsBlockEscape);
+  uploadPictureHashTags.addEventListener('keydown', onInputsBlockEscape);
+  uploadPictureText.addEventListener('keydown', onInputsBlockEscape);
   closePictureEditorButton.addEventListener('click', onPictureEditorClose);
 };
 
